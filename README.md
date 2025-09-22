@@ -20,3 +20,12 @@ Este repositório contém o projeto desenvolvido para a disciplina de **Desenvol
 - HTML, CSS e JavaScript
 - Maven
 
+---
+
+## 📂 Banco de Dados
+
+Você pode baixar o script do banco clicando abaixo:
+
+👉 [📥 Baixar script.sql](https://gist.github.com/piresiann/7bb5872ecae1951921eb7ceb1aa1a044)
+
+
