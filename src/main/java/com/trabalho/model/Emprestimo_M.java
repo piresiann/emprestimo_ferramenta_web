@@ -1,7 +1,7 @@
-package com.trabalho.Model;
+package com.trabalho.model;
 
 import java.util.*;
-import com.trabalho.DAO.EmprestimoDAO;
+import com.trabalho.dao.EmprestimoDAO;
 import java.sql.SQLException;
 
 public class Emprestimo_M {

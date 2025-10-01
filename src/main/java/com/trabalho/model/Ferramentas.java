@@ -1,7 +1,7 @@
-package com.trabalho.Model;
+package com.trabalho.model;
 
 import java.util.*;
-import com.trabalho.DAO.FerramentasDAO;
+import com.trabalho.dao.FerramentasDAO;
 import java.sql.SQLException;
 
 public class Ferramentas {

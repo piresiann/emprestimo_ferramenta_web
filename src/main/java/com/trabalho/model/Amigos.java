@@ -1,7 +1,7 @@
-package com.trabalho.Model;
+package com.trabalho.model;
 
 import java.util.*;
-import com.trabalho.DAO.AmigosDAO;
+import com.trabalho.dao.AmigosDAO;
 import java.sql.SQLException;
 
 public class Amigos {
