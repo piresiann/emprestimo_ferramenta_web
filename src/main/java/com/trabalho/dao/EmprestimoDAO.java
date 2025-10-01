@@ -1,7 +1,7 @@
-package com.trabalho.DAO;
+package com.trabalho.dao;
 
-import com.trabalho.Config.ConfigDb;
-import com.trabalho.Model.Emprestimo_M;
+import com.trabalho.config.ConfigDb;
+import com.trabalho.model.Emprestimo_M;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

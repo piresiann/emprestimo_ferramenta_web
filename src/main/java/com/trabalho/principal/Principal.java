@@ -1,6 +1,6 @@
-package com.trabalho.Principal;
+package com.trabalho.principal;
 
-import com.trabalho.View.TelaPrincipal;
+import com.trabalho.view.TelaPrincipal;
 
 public class Principal {
 

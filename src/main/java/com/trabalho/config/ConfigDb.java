@@ -1,4 +1,4 @@
-package com.trabalho.Config;
+package com.trabalho.config;
 
 import java.io.IOException;
 import java.io.InputStream;
