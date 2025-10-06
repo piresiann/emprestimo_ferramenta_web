@@ -6,10 +6,10 @@ Este repositório contém o projeto desenvolvido para a disciplina de **Desenvol
 
 ## 👥 Integrantes
 
-- **Ian Pires da Silva - 10723112618** - [GitHub](https://github.com/piresiann)
-- **Vinícius de Andrade Custódio - 10723114822** - [GitHub](https://github.com/Viniciuss2004)
-- **Kaynã William da Silva - 10723114126** - [GitHub](https://github.com/KaynaWll)
-- **Davi Bertoldo Souza - 10724268907** - [GitHub](https://github.com/davibertoldo)
+- **Ian Pires da Silva - 10723112618** - piresiann
+- **Vinícius de Andrade Custódio - 10723114822** - Viniciuss2004
+- **Kaynã William da Silva - 10723114126** - KaynaWll
+- **Davi Bertoldo Souza - 10724268907** - davibertoldo
 
 ---
 
