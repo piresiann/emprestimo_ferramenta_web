@@ -96,27 +96,27 @@ public class Emprestimo {
         return dao.getEmprestimoList();
     }
 
-    public boolean InsertEmprestimoBD(String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, String codigoFerramenta) throws SQLException {
+    public boolean insertEmprestimo(String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, String codigoFerramenta) throws SQLException {
         int id = this.maiorID() + 1;
         Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, dataEmprestimo, dataDevolucao, codigoFerramenta);
 
-        dao.InsertEmprestimoBD(emprestimo);
+        dao.insertEmprestimo(emprestimo);
         return true;
     }
 
-    public boolean DeleteEmprestimoBD(int id) {
-        dao.DeleteEmprestimoBD(id);
+    public boolean deleteEmprestimoBD(int id) {
+        dao.deleteEmprestimoById(id);
         return true;
     }
 
-    public boolean UpdateEmprestimoBD(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, String codigoFerramenta) {
+    public boolean updateEmprestimoBD(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, String codigoFerramenta) {
         Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, dataEmprestimo, dataDevolucao, codigoFerramenta);
-        dao.UpdateEmprestimoBD(emprestimo);
+        dao.updateEmprestimoById(emprestimo);
         return true;
     }
 
-    public Emprestimo carregaEmprestimo(int id) {
-        dao.carregaEmprestimo(id);
+    public Emprestimo getEmprestimoById(int id) {
+        dao.getEmprestimoById(id);
         return null;
     }
 

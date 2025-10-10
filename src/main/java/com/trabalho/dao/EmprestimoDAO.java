@@ -70,7 +70,7 @@ public class EmprestimoDAO {
         return emprestimoList;
     }
 
-    public boolean InsertEmprestimoBD(Emprestimo emprestimo) {
+    public boolean insertEmprestimo(Emprestimo emprestimo) {
         String sql = "INSERT INTO emprestimo (id,nome_amigo,ferramenta,data_emprestimo,data_devolucao) VALUES(?,?,?,?,?,?)";
 
         try {
@@ -92,7 +92,7 @@ public class EmprestimoDAO {
         }
     }
 
-    public boolean DeleteEmprestimoBD(int id) {
+    public boolean deleteEmprestimoById(int id) {
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
                 stmt.executeUpdate("DELETE FROM emprestimo WHERE id = " + id);
@@ -104,7 +104,7 @@ public class EmprestimoDAO {
         return true;
     }
 
-    public boolean UpdateEmprestimoBD(Emprestimo emprestimo) {
+    public boolean updateEmprestimoById(Emprestimo emprestimo) {
 
         String sql = "UPDATE emprestimo set nome_amigo = ? , ferramenta = ? , data_emprestimo = ? , data_devolucao = ?  WHERE id = ?";
 
@@ -127,7 +127,7 @@ public class EmprestimoDAO {
 
     }
 
-    public Emprestimo carregaEmprestimo(int id) {
+    public Emprestimo getEmprestimoById(int id) {
 
         Emprestimo emprestimo = new Emprestimo();
         emprestimo.setId(id);
