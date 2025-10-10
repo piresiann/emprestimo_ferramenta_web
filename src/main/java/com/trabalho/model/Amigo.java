@@ -58,22 +58,22 @@ public class Amigo {
         return dao.getAllAmigos();
     }
 
-    public boolean InsertAmigo(String nome, String telefone) throws SQLException {
+    public boolean insertAmigo(String nome, String telefone) throws SQLException {
         int id = this.maiorID() + 1;
         Amigo amigo = new Amigo(id, nome, telefone);
 
-        dao.InsertAmigo(amigo);
+        dao.insertAmigo(amigo);
         return true;
     }
 
-    public boolean DeleteAmigoById(int id) {
-        dao.DeleteAmigoById(id);
+    public boolean deleteAmigoById(int id) {
+        dao.deleteAmigoById(id);
         return true;
     }
 
-    public boolean UpdateAmigoById(int id, String nome, String telefone) throws SQLException {
+    public boolean updateAmigoById(int id, String nome, String telefone) throws SQLException {
         Amigo amigo = new Amigo(id, nome, telefone);
-        dao.UpdateAmigoById(amigo);
+        dao.updateAmigoById(amigo);
         return true;
     }
 

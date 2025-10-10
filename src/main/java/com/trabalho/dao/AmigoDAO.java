@@ -60,7 +60,7 @@ public class AmigoDAO {
         return amigosList;
     }
 
-    public boolean InsertAmigo(Amigo amigo) throws SQLException {
+    public boolean insertAmigo(Amigo amigo) throws SQLException {
         String sql = "INSERT INTO amigo(id,nome,telefone) VALUES(?,?,?)";
 
         try {
@@ -79,7 +79,7 @@ public class AmigoDAO {
         }
     }
 
-    public boolean DeleteAmigoById(int id) {
+    public boolean deleteAmigoById(int id) {
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
                 stmt.executeUpdate("DELETE FROM amigo WHERE id = " + id);
@@ -91,7 +91,7 @@ public class AmigoDAO {
         return true;
     }
 
-    public boolean UpdateAmigoById(Amigo amigo) throws SQLException {
+    public boolean updateAmigoById(Amigo amigo) throws SQLException {
 
         String sql = "UPDATE amigo set nome = ? , telefone = ? WHERE id = ?";
 
