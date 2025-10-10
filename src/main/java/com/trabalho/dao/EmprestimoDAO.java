@@ -26,7 +26,7 @@ public class EmprestimoDAO {
         int maiorID = 0;
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                ResultSet res = stmt.executeQuery("SELECT MAX(id) id FROM emprestimos");
+                ResultSet res = stmt.executeQuery("SELECT MAX(id) id FROM emprestimo");
                 res.next();
                 maiorID = res.getInt("id");
             }
@@ -42,7 +42,7 @@ public class EmprestimoDAO {
 
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                ResultSet res = stmt.executeQuery("SELECT id, nome_amigo, REGEXP_REPLACE(ferramenta, '[0-9]', '') AS ferramenta, DATE_FORMAT(data_emprestimo, ' %d / %m / %Y') AS data_Emprestimo, DATE_FORMAT(data_devolucao, ' %d / %m / %Y') AS data_devolucao FROM emprestimos;");
+                ResultSet res = stmt.executeQuery("SELECT id, nome_amigo, REGEXP_REPLACE(ferramenta, '[0-9]', '') AS ferramenta, DATE_FORMAT(data_emprestimo, ' %d / %m / %Y') AS data_Emprestimo, DATE_FORMAT(data_devolucao, ' %d / %m / %Y') AS data_devolucao FROM emprestimo;");
                 while (res.next()) {
                     int id = res.getInt("cd_emprestimo");
                     String nomeAmigo = res.getString("nome_amigo");
@@ -71,7 +71,7 @@ public class EmprestimoDAO {
     }
 
     public boolean InsertEmprestimoBD(Emprestimo emprestimo) {
-        String sql = "INSERT INTO emprestimos (id,nome_amigo,ferramenta,data_emprestimo,data_devolucao) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO emprestimo (id,nome_amigo,ferramenta,data_emprestimo,data_devolucao) VALUES(?,?,?,?,?,?)";
 
         try {
             try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
@@ -95,7 +95,7 @@ public class EmprestimoDAO {
     public boolean DeleteEmprestimoBD(int id) {
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                stmt.executeUpdate("DELETE FROM emprestimos WHERE id = " + id);
+                stmt.executeUpdate("DELETE FROM emprestimo WHERE id = " + id);
             }
 
         } catch (SQLException erro) {
@@ -106,7 +106,7 @@ public class EmprestimoDAO {
 
     public boolean UpdateEmprestimoBD(Emprestimo emprestimo) {
 
-        String sql = "UPDATE emprestimos set nome_amigo = ? , ferramenta = ? , data_emprestimo = ? , data_devolucao = ?  WHERE id = ?";
+        String sql = "UPDATE emprestimo set nome_amigo = ? , ferramenta = ? , data_emprestimo = ? , data_devolucao = ?  WHERE id = ?";
 
         try {
             try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
@@ -134,7 +134,7 @@ public class EmprestimoDAO {
 
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                ResultSet res = stmt.executeQuery("SELECT * FROM emprestimos WHERE id = " + id);
+                ResultSet res = stmt.executeQuery("SELECT * FROM emprestimo WHERE id = " + id);
                 res.next();
 
                 emprestimo.setNomeAmigo(res.getString("nome_amigo"));
