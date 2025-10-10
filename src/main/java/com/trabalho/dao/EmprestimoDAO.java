@@ -1,7 +1,7 @@
 package com.trabalho.dao;
 
 import com.trabalho.config.ConfigDb;
-import com.trabalho.model.Emprestimo_M;
+import com.trabalho.model.Emprestimo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class EmprestimoDAO {
 
-    public static ArrayList<Emprestimo_M> MinhaLista = new ArrayList<>();
+    public static ArrayList<Emprestimo> emprestimoList = new ArrayList<>();
     public ConfigDb conexao;
 
     public EmprestimoDAO() {
@@ -26,9 +26,9 @@ public class EmprestimoDAO {
         int maiorID = 0;
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                ResultSet res = stmt.executeQuery("SELECT MAX(id_e) id_e FROM emprestimos");
+                ResultSet res = stmt.executeQuery("SELECT MAX(id) id FROM emprestimos");
                 res.next();
-                maiorID = res.getInt("id_e");
+                maiorID = res.getInt("id");
             }
 
         } catch (SQLException ex) {
@@ -37,50 +37,50 @@ public class EmprestimoDAO {
         return maiorID;
     }
 
-    public ArrayList<Emprestimo_M> getMinhaLista() {
-        MinhaLista.clear();
+    public ArrayList<Emprestimo> getEmprestimoList() {
+        emprestimoList.clear();
 
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                ResultSet res = stmt.executeQuery("SELECT Id_e, Nome, REGEXP_REPLACE(Ferramenta, '[0-9]', '') AS Ferramenta, DATE_FORMAT(Data_Emprestimo, ' %d / %m / %Y') AS Data_Emprestimo, DATE_FORMAT(Data_Devolucao, ' %d / %m / %Y') AS Data_Devolucao FROM emprestimos;");
+                ResultSet res = stmt.executeQuery("SELECT id, nome_amigo, REGEXP_REPLACE(ferramenta, '[0-9]', '') AS ferramenta, DATE_FORMAT(data_emprestimo, ' %d / %m / %Y') AS data_Emprestimo, DATE_FORMAT(data_devolucao, ' %d / %m / %Y') AS data_devolucao FROM emprestimos;");
                 while (res.next()) {
-                    int id_e = res.getInt("Id_e");
-                    String nome_e = res.getString("Nome");
-                    String ferramenta = res.getString("Ferramenta");
-                    String emprestimo = res.getString("Data_Emprestimo");
-                    String devolucao = res.getString("Data_Devolucao");
+                    int id = res.getInt("cd_emprestimo");
+                    String nomeAmigo = res.getString("nome_amigo");
+                    String ferramenta = res.getString("ferramenta");
+                    String dataEmprestimoStr = res.getString("data_emprestimo");
+                    String dataDevolucaoStr = res.getString("data_devolucao");
 
                     SimpleDateFormat inputDateFormat = new SimpleDateFormat(" dd / MM / yyyy");
                     SimpleDateFormat outputDateFormat = new SimpleDateFormat(" dd / MM / yyyy");
 
-                    Date dataEmprestimo = inputDateFormat.parse(emprestimo);
-                    Date dataDevolucao = inputDateFormat.parse(devolucao);
+                    Date dataEmprestimo = inputDateFormat.parse(dataEmprestimoStr);
+                    Date dataDevolucao = inputDateFormat.parse(dataDevolucaoStr);
 
-                    String data_e = outputDateFormat.format(dataEmprestimo);
-                    String data_d = outputDateFormat.format(dataDevolucao);
+                    String dataEmprestimoFormatadada = outputDateFormat.format(dataEmprestimo);
+                    String dataDevolucaoFormatada = outputDateFormat.format(dataDevolucao);
 
-                    Emprestimo_M objeto = new Emprestimo_M(id_e, nome_e, ferramenta, data_e, data_d, null);
-                    MinhaLista.add(objeto);
+                    Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, dataEmprestimoFormatadada, dataDevolucaoFormatada, null);
+                    emprestimoList.add(emprestimo);
                 }
             }
 
         } catch (SQLException | ParseException ex) {
         }
 
-        return MinhaLista;
+        return emprestimoList;
     }
 
-    public boolean InsertEmprestimoBD(Emprestimo_M objeto) {
-        String sql = "INSERT INTO emprestimos (id_e,nome,ferramenta,data_emprestimo,data_devolucao,cao) VALUES(?,?,?,?,?,?)";
+    public boolean InsertEmprestimoBD(Emprestimo emprestimo) {
+        String sql = "INSERT INTO emprestimos (id,nome_amigo,ferramenta,data_emprestimo,data_devolucao) VALUES(?,?,?,?,?,?)";
 
         try {
             try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
-                stmt.setInt(1, objeto.getId_e());
-                stmt.setString(2, objeto.getNome_e());
-                stmt.setString(3, objeto.getFerramenta());
-                stmt.setString(4, objeto.getData_e());
-                stmt.setString(5, objeto.getData_d());
-                stmt.setString(6, objeto.getCod());
+                stmt.setInt(1, emprestimo.getId());
+                stmt.setString(2, emprestimo.getNomeAmigo());
+                stmt.setString(3, emprestimo.getFerramenta());
+                stmt.setString(4, emprestimo.getDataEmprestimo());
+                stmt.setString(5, emprestimo.getDataDevolucao());
+                stmt.setString(6, emprestimo.getCodigoFerramenta());
 
                 stmt.execute();
             }
@@ -92,10 +92,10 @@ public class EmprestimoDAO {
         }
     }
 
-    public boolean DeleteEmprestimoBD(int id_e) {
+    public boolean DeleteEmprestimoBD(int id) {
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                stmt.executeUpdate("DELETE FROM emprestimos WHERE id_e = " + id_e);
+                stmt.executeUpdate("DELETE FROM emprestimos WHERE id = " + id);
             }
 
         } catch (SQLException erro) {
@@ -104,17 +104,17 @@ public class EmprestimoDAO {
         return true;
     }
 
-    public boolean UpdateEmprestimoBD(Emprestimo_M objeto) {
+    public boolean UpdateEmprestimoBD(Emprestimo emprestimo) {
 
-        String sql = "UPDATE emprestimos set nome = ? , ferramenta = ? , data_emprestimo = ? , data_devolucao = ?  WHERE id_e = ?";
+        String sql = "UPDATE emprestimos set nome_amigo = ? , ferramenta = ? , data_emprestimo = ? , data_devolucao = ?  WHERE id = ?";
 
         try {
             try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
-                stmt.setString(1, objeto.getNome_e());
-                stmt.setString(2, objeto.getFerramenta());
-                stmt.setString(3, objeto.getData_e());
-                stmt.setString(4, objeto.getData_d());
-                stmt.setInt(5, objeto.getId_e());
+                stmt.setString(1, emprestimo.getNomeAmigo());
+                stmt.setString(2, emprestimo.getFerramenta());
+                stmt.setString(3, emprestimo.getDataEmprestimo());
+                stmt.setString(4, emprestimo.getDataDevolucao());
+                stmt.setInt(5, emprestimo.getId());
 
                 stmt.execute();
             }
@@ -127,25 +127,25 @@ public class EmprestimoDAO {
 
     }
 
-    public Emprestimo_M carregaEmprestimo(int id_e) {
+    public Emprestimo carregaEmprestimo(int id) {
 
-        Emprestimo_M objeto = new Emprestimo_M();
-        objeto.setId_e(id_e);
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.setId(id);
 
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                ResultSet res = stmt.executeQuery("SELECT * FROM emprestimos WHERE id_e = " + id_e);
+                ResultSet res = stmt.executeQuery("SELECT * FROM emprestimos WHERE id = " + id);
                 res.next();
 
-                objeto.setNome_e(res.getString("Nome"));
-                objeto.setFerramenta(res.getString("Ferramenta"));
-                objeto.setData_e(res.getString("Data_Emprestimo"));
-                objeto.setData_d(res.getString("Data_Devolucao"));
-                objeto.setCod(res.getString("Cod"));
+                emprestimo.setNomeAmigo(res.getString("nome_amigo"));
+                emprestimo.setFerramenta(res.getString("ferramenta"));
+                emprestimo.setDataEmprestimo(res.getString("data_emprestimo"));
+                emprestimo.setDataDevolucao(res.getString("data_devolucao"));
+                emprestimo.setCodigoFerramenta(res.getString("codigo_ferramenta"));
             }
 
         } catch (SQLException erro) {
         }
-        return objeto;
+        return emprestimo;
     }
 }
