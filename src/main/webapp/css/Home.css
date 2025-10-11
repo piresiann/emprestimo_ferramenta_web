@@ -2,28 +2,71 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    overflow: hidden;
+    user-select: none;
 }
 
 .navbar {
     background-color: #000000;
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.navbar a {
+.nav-link, .dropbtn {
     color: white;
     font-size: small;
     text-decoration: none;
     padding: 14px 20px;
     text-transform: uppercase;
     font-weight: bold;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
 }
 
-.navbar a:hover {
+.nav-link:hover, .dropbtn:hover {
     background-color: #303030;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 85.5%;
+    width: 100%;
+    left: 50%; transform: translateX(-50%);
+    margin-top: 6px;
+    background-color: rgb(48, 48, 48);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.35);
+    z-index: 1000;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.dropdown-content.show {
+    display: block;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: white;
+    font-size: 13px;
+}
+
+.dropdown-content a:hover {
+    background-color: #515151;
 }
 
 .content {
