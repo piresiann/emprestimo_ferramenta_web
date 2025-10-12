@@ -13,7 +13,7 @@ form label {
 }
 
 form input[type="text"],
-form input[type="email"] {
+form input[type="tel"] {
     width: 100%;
     max-width: 400px;
     padding: 10px;
@@ -25,7 +25,7 @@ form input[type="email"] {
 }
 
 form input[type="text"]:focus,
-form input[type="email"]:focus {
+form input[type="tel"]:focus {
     border-color: #0078d7;
     box-shadow: 0 0 4px rgba(0, 120, 215, 0.3);
 }
@@ -67,4 +67,11 @@ form .button-group {
     font-size: 26px;
     font-weight: 700;
     margin-bottom: 15px;
+}
+
+.erro {
+    color: red;
+    font-size: 13px;
+    display: block;
+    margin-top: -10px;
 }

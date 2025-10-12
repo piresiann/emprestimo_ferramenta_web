@@ -13,9 +13,9 @@ public class CadastrarAmigo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String nome = request.getParameter("nome");
-        String email = request.getParameter("email");
+        String telefone = request.getParameter("telefone");
 
-        System.out.println("Nome: " + nome + ", Email: " + email);
+        System.out.println("Nome: " + nome + ", Telefone: " + telefone);
         response.sendRedirect(request.getContextPath() + "/home");
     }
 }

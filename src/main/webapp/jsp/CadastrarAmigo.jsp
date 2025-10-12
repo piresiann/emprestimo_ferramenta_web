@@ -19,10 +19,12 @@
             <h1 class="titulo" style="margin: 0">Cadastrar Amigo</h1>
 
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
+            <input type="text" id="nome" name="nome" maxlength="35" autocomplete="off" required>
+            <span id="msg-nome" class="erro"></span>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" maxlength="15" placeholder="(xx) xxxxx-xxxx" autocomplete="off" required>
+            <span id="msg-telefone" class="erro"></span>
 
             <div class="button-group">
                 <button type="button" onclick="window.location.href='/v1/home'">Voltar</button>
@@ -34,6 +36,7 @@
 
 <footer class="footer">© 2025</footer>
 <script src="../js/Navegar.js"></script>
+<script src="../js/CadastrarAmigoValidacao.js"></script>
 
 </body>
 </html>
