@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empréstimo de Ferramentas</title>
+    <link rel="stylesheet" href="../css/CadastrarAmigo.css">
     <link rel="stylesheet" href="../css/LayoutBase.css">
     <link rel="icon" type="image/png" href="../Icone.png">
 </head>
@@ -13,7 +14,7 @@
 <%@ include file="NavBar.jsp" %>
 
 <div class="content">
-    <section class="hero">
+    <section class="hero" style="padding: 20px 40px">
         <form action="<%= request.getContextPath() %>/cadastrar/amigo/servlet" method="post">
             <h1 class="titulo" style="margin: 0">Cadastrar Amigo</h1>
 
