@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    overflow: hidden;
+    user-select: none;
+}
+
+.navbar {
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-link, .dropbtn {
+    color: white;
+    font-size: small;
+    text-decoration: none;
+    padding: 14px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-link:hover, .dropbtn:hover {
+    background-color: #303030;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 85.5%;
+    width: 100%;
+    left: 50%; transform: translateX(-50%);
+    margin-top: 6px;
+    background-color: rgb(48, 48, 48);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.35);
+    z-index: 1000;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.dropdown-content.show {
+    display: block;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: white;
+    font-size: 13px;
+}
+
+.dropdown-content a:hover {
+    background-color: #515151;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 83px);
+    background: linear-gradient(120deg, #e9edf2, #000d40);
+    overflow: hidden;
+    position: relative;
+}
+
+.hero {
+    position: relative;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+    padding: 60px;
+    max-width: 750px;
+    text-align: center;
+    animation: fadeInUp 1.2s ease;
+    z-index: 1;
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.titulo {
+    font-size: 1.9rem;
+    color: #062d4e;
+    margin-bottom: 20px;
+}
+
+.subtitulo {
+    font-size: 1.05rem;
+    color: #333;
+    line-height: 1.6;
+    animation: fadeIn 2s ease 0.5s forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.footer {
+    color: #e9edf2;
+    height: 40px;
+    background-color: #000000;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
