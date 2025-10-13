@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -32,6 +33,17 @@
             </div>
         </form>
     </section>
+
+    <c:if test="${not empty sessionScope.mensagemSucesso}">
+        <div class="mensagem mensagem-sucesso">${sessionScope.mensagemSucesso}</div>
+        <c:remove var="mensagemSucesso" scope="session" />
+    </c:if>
+
+    <c:if test="${not empty sessionScope.mensagemErro}">
+        <div class="mensagem mensagem-erro">${sessionScope.mensagemErro}</div>
+        <c:remove var="mensagemErro" scope="session" />
+    </c:if>
+
 </div>
 
 <footer class="footer">© 2025</footer>
