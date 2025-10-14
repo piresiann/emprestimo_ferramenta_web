@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const nome = nomeInput.value.trim();
         const telefoneNumeros = telefoneInput.value.replace(/\D/g, "");
 
-        if (nome.length < 3 || nome.length > 25) {
+        if (nome.length < 3) {
             nomeMsg.textContent = "Mínimo 3 caracteres.";
             valid = false;
         } else {

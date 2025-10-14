@@ -20,7 +20,7 @@
             <h1 class="titulo" style="margin: 0">Cadastrar Amigo</h1>
 
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" maxlength="35" autocomplete="off" required>
+            <input type="text" id="nome" name="nome" maxlength="30" autocomplete="off" required>
             <span id="msg-nome" class="erro"></span>
 
             <label for="telefone">Telefone:</label>
