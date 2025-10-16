@@ -34,7 +34,7 @@ public class CadastrarFerramenta extends HttpServlet {
             }
 
             Ferramenta ferramenta = new Ferramenta();
-            ferramenta.insertFerramenta(nome, marca, status, valorAquisicao);
+            ferramenta.insertFerramenta(nome, status, marca, valorAquisicao);
 
             request.getSession().setAttribute("mensagemSucesso", "Ferramenta cadastrada com sucesso!");
         } catch (NumberFormatException e) {
