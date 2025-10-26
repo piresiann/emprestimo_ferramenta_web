@@ -44,7 +44,7 @@ public class EmprestimoDAO {
             try (Statement stmt = conexao.getConexao().createStatement()) {
                 ResultSet res = stmt.executeQuery("SELECT id, nome_amigo, REGEXP_REPLACE(ferramenta, '[0-9]', '') AS ferramenta, DATE_FORMAT(data_emprestimo, ' %d / %m / %Y') AS data_emprestimo, DATE_FORMAT(data_devolucao, ' %d / %m / %Y') AS data_devolucao FROM emprestimo;");
                 while (res.next()) {
-                    int id = res.getInt("cd_emprestimo");
+                    int id = res.getInt("id");
                     String nomeAmigo = res.getString("nome_amigo");
                     String ferramenta = res.getString("ferramenta");
                     String dataEmprestimoStr = res.getString("data_emprestimo");
@@ -71,7 +71,7 @@ public class EmprestimoDAO {
     }
 
     public boolean insertEmprestimo(Emprestimo emprestimo) {
-        String sql = "INSERT INTO emprestimo (id,nome_amigo,ferramenta,data_emprestimo,data_devolucao) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO emprestimo (id,nome_amigo,ferramenta,data_emprestimo,data_devolucao,codigo_ferramenta) VALUES(?,?,?,?,?,?)";
 
         try {
             try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {

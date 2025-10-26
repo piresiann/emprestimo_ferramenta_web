@@ -12,7 +12,7 @@
     <div class="dropdown">
         <button class="dropbtn">Empréstimo e Devolução ▾</button>
         <div class="dropdown-content">
-            <a href="<%= request.getContextPath() %>/emprestimo">Registrar Empréstimo</a>
+            <a href="<%= request.getContextPath() %>/cadastrar/emprestimo">Registrar Empréstimo</a>
             <a href="<%= request.getContextPath() %>/devolucao">Registrar Devolução</a>
         </div>
     </div>
