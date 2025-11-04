@@ -17,7 +17,7 @@ public class ControllerURL extends HttpServlet {
 
         switch (path) {
             case "/home":
-                destino = "/Home.html";
+                destino = "/jsp/Home.jsp";
                 break;
 
             case "/cadastrar/amigo":

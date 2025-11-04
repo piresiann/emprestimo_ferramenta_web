@@ -1,6 +1,5 @@
 package com.trabalho.servlet;
 
-import com.trabalho.model.Amigo;
 import com.trabalho.model.Ferramenta;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

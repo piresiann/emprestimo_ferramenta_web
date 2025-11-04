@@ -1,9 +1,9 @@
 package com.trabalho.model;
 
 import java.math.BigDecimal;
-import java.util.*;
 import com.trabalho.dao.FerramentaDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Ferramenta {
 
