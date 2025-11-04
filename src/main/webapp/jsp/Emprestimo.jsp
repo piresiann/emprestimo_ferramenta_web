@@ -37,9 +37,6 @@
             </select>
             <span id="msg-ferramenta" class="erro"></span>
 
-            <label for="data_emprestimo">Data do Empréstimo:</label>
-            <input type="date" id="data_emprestimo" name="data_emprestimo" required>
-
             <label for="data_devolucao">Data de Devolução:</label>
             <input type="date" id="data_devolucao" name="data_devolucao" required>
             <span id="msg-data" class="erro"></span>

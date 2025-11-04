@@ -1,7 +1,9 @@
 package com.trabalho.model;
 
+import java.util.*;
 import com.trabalho.dao.EmprestimoDAO;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Emprestimo {
@@ -15,7 +17,7 @@ public class Emprestimo {
     private final EmprestimoDAO dao;
 
     public Emprestimo() {
-        this.dao = new EmprestimoDAO(); 
+        this.dao = new EmprestimoDAO();
     }
 
     public Emprestimo(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, String codigoFerramenta) {
@@ -98,7 +100,8 @@ public class Emprestimo {
 
     public boolean insertEmprestimo(String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, String codigoFerramenta) throws SQLException {
         int id = this.maiorID() + 1;
-        Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, dataEmprestimo, dataDevolucao, codigoFerramenta);
+        String hoje = LocalDate.now().toString();
+        Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, hoje, dataDevolucao, codigoFerramenta);
 
         dao.insertEmprestimo(emprestimo);
         return true;

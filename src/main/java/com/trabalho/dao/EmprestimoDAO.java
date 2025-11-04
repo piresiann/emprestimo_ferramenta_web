@@ -71,16 +71,16 @@ public class EmprestimoDAO {
     }
 
     public boolean insertEmprestimo(Emprestimo emprestimo) {
-        String sql = "INSERT INTO emprestimo (id,nome_amigo,ferramenta,data_emprestimo,data_devolucao,codigo_ferramenta) VALUES(?,?,?,?,?,?)";
+        // força a data_emprestimo como a data atual no banco
+        String sql = "INSERT INTO emprestimo (id,nome_amigo,ferramenta,data_emprestimo,data_devolucao,codigo_ferramenta) VALUES(?,?,?,NOW(),?,?)";
 
         try {
             try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
                 stmt.setInt(1, emprestimo.getId());
                 stmt.setString(2, emprestimo.getNomeAmigo());
                 stmt.setString(3, emprestimo.getFerramenta());
-                stmt.setString(4, emprestimo.getDataEmprestimo());
-                stmt.setString(5, emprestimo.getDataDevolucao());
-                stmt.setString(6, emprestimo.getCodigoFerramenta());
+                stmt.setString(4, emprestimo.getDataDevolucao());
+                stmt.setString(5, emprestimo.getCodigoFerramenta());
 
                 stmt.execute();
             }
