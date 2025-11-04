@@ -1,8 +1,8 @@
 package com.trabalho.model;
 
-import java.util.*;
 import com.trabalho.dao.AmigoDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Amigo {
 
