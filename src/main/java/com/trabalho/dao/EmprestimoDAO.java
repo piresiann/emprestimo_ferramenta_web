@@ -42,7 +42,7 @@ public class EmprestimoDAO {
 
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                ResultSet res = stmt.executeQuery("SELECT id, nome_amigo, REGEXP_REPLACE(ferramenta, '[0-9]', '') AS ferramenta, DATE_FORMAT(data_emprestimo, ' %d / %m / %Y') AS data_emprestimo, DATE_FORMAT(data_devolucao, ' %d / %m / %Y') AS data_devolucao FROM emprestimo;");
+                ResultSet res = stmt.executeQuery("SELECT id, nome_amigo, REGEXP_REPLACE(ferramenta, '[0-9]', '') AS ferramenta, DATE_FORMAT(data_emprestimo, '%d/%m/%Y') AS data_emprestimo, DATE_FORMAT(data_devolucao, '%d/%m/%Y') AS data_devolucao FROM emprestimo;");
                 while (res.next()) {
                     int id = res.getInt("id");
                     String nomeAmigo = res.getString("nome_amigo");
@@ -50,8 +50,8 @@ public class EmprestimoDAO {
                     String dataEmprestimoStr = res.getString("data_emprestimo");
                     String dataDevolucaoStr = res.getString("data_devolucao");
 
-                    SimpleDateFormat inputDateFormat = new SimpleDateFormat(" dd / MM / yyyy");
-                    SimpleDateFormat outputDateFormat = new SimpleDateFormat(" dd / MM / yyyy");
+                    SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
                     Date dataEmprestimo = inputDateFormat.parse(dataEmprestimoStr);
                     Date dataDevolucao = inputDateFormat.parse(dataDevolucaoStr);
