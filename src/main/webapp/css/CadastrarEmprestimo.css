@@ -12,10 +12,10 @@ form label {
     align-self: flex-start;
 }
 
-form input[type="text"],
-form input[type="tel"] {
+form select,
+form input[type="date"] {
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -24,8 +24,8 @@ form input[type="tel"] {
     transition: border-color 0.2s ease-in-out;
 }
 
-form input[type="text"]:focus,
-form input[type="tel"]:focus {
+form select:focus,
+form input[type="date"]:focus {
     border-color: #0078d7;
     box-shadow: 0 0 4px rgba(0, 120, 215, 0.3);
 }
@@ -67,11 +67,4 @@ form .button-group {
     font-size: 26px;
     font-weight: 700;
     margin-bottom: 15px;
-}
-
-.erro {
-    color: red;
-    font-size: 13px;
-    display: block;
-    margin-top: -10px;
 }

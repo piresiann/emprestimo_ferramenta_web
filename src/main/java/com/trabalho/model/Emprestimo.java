@@ -92,7 +92,7 @@ public class Emprestimo {
                 '}';
     }
 
-    public ArrayList getEmprestimos() {
+    public ArrayList getAllEmprestimos() throws SQLException {
         return dao.getEmprestimoList();
     }
 
