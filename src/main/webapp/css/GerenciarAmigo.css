@@ -1,0 +1,168 @@
+.tabela-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tabela-container th, .tabela-container td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.tabela-container th {
+    background-color: #f2f2f2;
+}
+
+.tabela-container button {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.tabela-container .editar {
+    background-color: #2196F3;
+    color: white;
+}
+
+.tabela-container .excluir {
+    background-color: #f44336;
+    color: white;
+}
+
+
+.paginacao {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.paginacao a {
+    margin: 0 5px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #2196F3;
+    padding: 5px 10px;
+    border: 1px solid #2196F3;
+    border-radius: 4px;
+}
+
+.paginacao a:hover {
+    background-color: #e0f2ff;
+}
+
+.paginacao span {
+    margin: 0 10px;
+    font-weight: bold;
+    color: #666;
+}
+
+.btn-voltar {
+    display: block;
+    width: 150px;
+    margin: 20px auto;
+    padding: 10px;
+    text-align: center;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+}
+
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+
+.fechar-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.fechar-modal:hover,
+.fechar-modal:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.edicao-form {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    max-width: 100%;
+    box-shadow: none;
+}
+
+.edicao-form h3 {
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.edicao-form label {
+    display: block;
+    margin: 8px 0 5px;
+    font-weight: bold;
+}
+
+.edicao-form input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.form-botoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.form-botoes .salvar {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-grow: 1;
+    font-weight: bold;
+}
+
+.form-botoes .cancelar {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-grow: 1;
+    font-weight: bold;
+}
