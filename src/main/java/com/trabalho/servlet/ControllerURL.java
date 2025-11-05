@@ -5,7 +5,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/home", "/cadastrar/amigo", "/cadastrar/ferramenta", "/relatorio/amigo", "/relatorio/ferramenta", "/relatorio/emprestimo"})
+@WebServlet(urlPatterns = {"/home", "/cadastrar/amigo", "/cadastrar/ferramenta", "/relatorio/amigo", "/relatorio/ferramenta", "/relatorio/emprestimo", "/gerenciar/amigo"})
 public class ControllerURL extends HttpServlet {
 
     @Override
@@ -27,6 +27,10 @@ public class ControllerURL extends HttpServlet {
             case "/cadastrar/ferramenta":
                 destino = "/jsp/CadastrarFerramenta.jsp";
                 break;
+
+            case "/gerenciar/amigo":
+                request.getRequestDispatcher("/gerenciar/amigo/servlet").forward(request, response);
+                return;
 
             case "/relatorio/amigo":
                 request.getRequestDispatcher("/relatorio/amigo/servlet").forward(request, response);
