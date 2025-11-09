@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<%@ include file="NavBar.jsp" %>
+<%@ include file="jsp/NavBar.jsp" %>
 
 <div class="content">
     <section class="hero">
