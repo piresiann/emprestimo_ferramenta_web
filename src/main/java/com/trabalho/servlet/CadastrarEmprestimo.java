@@ -7,6 +7,7 @@ import com.trabalho.model.Amigo;
 import com.trabalho.model.Emprestimo;
 import com.trabalho.model.Ferramenta;
 
+import com.trabalho.model.StatusEmprestimo;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -63,6 +64,7 @@ public class CadastrarEmprestimo extends HttpServlet {
             emprestimo.setFerramenta(ferramenta.getNome());
             emprestimo.setDataEmprestimo(dataEmprestimo);
             emprestimo.setDataDevolucao(dataDevolucao);
+            emprestimo.setStatus(StatusEmprestimo.ATIVO);
 
             emprestimoDAO.insertEmprestimo(emprestimo);
 

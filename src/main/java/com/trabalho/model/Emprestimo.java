@@ -1,7 +1,7 @@
 package com.trabalho.model;
 
-import java.util.*;
 import com.trabalho.dao.EmprestimoDAO;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,18 +14,20 @@ public class Emprestimo {
     private String dataEmprestimo;
     private String dataDevolucao;
     private String codigoFerramenta;
+    private StatusEmprestimo status;
     private final EmprestimoDAO dao;
 
     public Emprestimo() {
         this.dao = new EmprestimoDAO();
     }
 
-    public Emprestimo(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, String codigoFerramenta) {
+    public Emprestimo(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, StatusEmprestimo status, String codigoFerramenta) {
         this.id = id;
         this.nomeAmigo = nomeAmigo;
         this.ferramenta = ferramenta;
         this.dataEmprestimo = dataEmprestimo;
         this.dataDevolucao = dataDevolucao;
+        this.status = status;
         this.codigoFerramenta = codigoFerramenta;
         this.dao = new EmprestimoDAO();
     }
@@ -78,6 +80,14 @@ public class Emprestimo {
         this.codigoFerramenta = codigoFerramenta;
     }
 
+    public StatusEmprestimo getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEmprestimo status) {
+        this.status = status;
+    }
+
     public EmprestimoDAO getDao() {
         return dao;
     }
@@ -90,18 +100,23 @@ public class Emprestimo {
                 ", ferramenta='" + ferramenta + '\'' +
                 ", dataEmprestimo='" + dataEmprestimo + '\'' +
                 ", dataDevolucao='" + dataDevolucao + '\'' +
+                ", status='" + status + '\'' +
                 ", codigoFerramenta='" + codigoFerramenta + '\'' +
                 '}';
     }
 
-    public ArrayList getAllEmprestimos() throws SQLException {
-        return dao.getEmprestimoList();
+    public ArrayList<Emprestimo> getAllEmprestimos() throws SQLException {
+        return dao.getEmprestimoList(false);
     }
 
-    public boolean insertEmprestimo(String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, String codigoFerramenta) throws SQLException {
+    public ArrayList<Emprestimo> getEmprestimosAtivos() throws SQLException {
+        return dao.getEmprestimoList(true);
+    }
+
+    public boolean insertEmprestimo(String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, StatusEmprestimo status, String codigoFerramenta) throws SQLException {
         int id = this.maiorID() + 1;
         String hoje = LocalDate.now().toString();
-        Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, hoje, dataDevolucao, codigoFerramenta);
+        Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, hoje, dataDevolucao, status,codigoFerramenta);
 
         dao.insertEmprestimo(emprestimo);
         return true;
@@ -112,8 +127,8 @@ public class Emprestimo {
         return true;
     }
 
-    public boolean updateEmprestimoBD(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, String codigoFerramenta) {
-        Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, dataEmprestimo, dataDevolucao, codigoFerramenta);
+    public boolean updateEmprestimoBD(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, StatusEmprestimo status, String codigoFerramenta) {
+        Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, dataEmprestimo, dataDevolucao, status, codigoFerramenta);
         dao.updateEmprestimoById(emprestimo);
         return true;
     }

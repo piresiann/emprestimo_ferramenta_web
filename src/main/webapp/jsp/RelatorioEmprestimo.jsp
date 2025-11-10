@@ -32,6 +32,7 @@
                     <th>Ferramenta</th>
                     <th>Data do Empréstimo</th>
                     <th>Data da Devolução</th>
+                    <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,7 @@
                         <td>${emprestimo.ferramenta}</td>
                         <td>${emprestimo.dataEmprestimo}</td>
                         <td>${emprestimo.dataDevolucao}</td>
+                        <td>${emprestimo.status.descricao}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

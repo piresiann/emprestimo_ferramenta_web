@@ -18,7 +18,7 @@ public class GerenciarEmprestimo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            ArrayList<Emprestimo> listaEmprestimo = emprestimo.getAllEmprestimos();
+            ArrayList<Emprestimo> listaEmprestimo = emprestimo.getEmprestimosAtivos();
 
             int itensPorPagina = 5;
             int paginaAtual = 1;
@@ -84,6 +84,7 @@ public class GerenciarEmprestimo extends HttpServlet {
                         existente.getFerramenta(),
                         dataEmprestimo,
                         dataDevolucao,
+                        existente.getStatus(),
                         existente.getCodigoFerramenta()
                 );
 
