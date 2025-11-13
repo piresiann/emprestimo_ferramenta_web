@@ -99,6 +99,24 @@
     </div>
 </div>
 
+<div id="modalExclusao" class="modal">
+    <div class="modal-content">
+        <span class="fechar-modal" onclick="fecharModalExclusao()">&times;</span>
+
+        <h3 style="text-align: center; margin-top: 10px;">Confirmar Exclusão</h3>
+        <p style="text-align: center; margin: 20px 0; font-size: 1.1em;">
+            Tem certeza que deseja excluir este amigo?
+        </p>
+
+        <input type="hidden" id="delete-id">
+
+        <div class="confirm-botoes">
+            <button type="button" id="btnConfirmarExclusao" class="btn-sim">Sim</button>
+            <button type="button" id="btnCancelarExclusao" class="btn-nao">Não</button>
+        </div>
+    </div>
+</div>
+
 
 
 <footer class="footer">© 2025</footer>
