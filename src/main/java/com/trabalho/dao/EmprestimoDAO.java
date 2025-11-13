@@ -119,7 +119,7 @@ public class EmprestimoDAO {
         }
     }
 
-    public boolean deleteEmprestimoById(int id) {
+    public boolean updateStatus(int id) {
         String sql = "UPDATE emprestimo SET status = 'Devolvido' WHERE id = " + id;
         try (Statement stmt = conexao.getConexao().createStatement()) {
             int linhasAfetadas = stmt.executeUpdate(sql);

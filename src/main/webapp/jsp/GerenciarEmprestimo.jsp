@@ -62,6 +62,9 @@
                     <a href="${pageContext.request.contextPath}/gerenciar/emprestimo?page=${paginaAtual + 1}">🡲</a>
                 </c:if>
             </div>
+
+            <a href="../home" class="btn-voltar">Voltar</a>
+
         </c:if>
     </section>
 
