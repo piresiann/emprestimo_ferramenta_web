@@ -92,8 +92,8 @@
                 <span id="msg-edit-telefone" class="erro"></span>
 
                 <div class="form-botoes">
-                    <button type="button" class="cancelar" onclick="fecharModalEdicao()">Sair sem Salvar</button>
-                    <button type="submit" class="salvar">Salvar Edição</button>
+                    <button type="button" class="cancelar" onclick="fecharModalEdicao()">Cancelar</button>
+                    <button type="submit" class="salvar">Salvar</button>
                 </div>
             </form>
         </div>
