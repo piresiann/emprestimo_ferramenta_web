@@ -31,7 +31,7 @@ public class CadastrarEmprestimo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             ArrayList<Amigo> amigos = amigoDAO.getAllAmigos();
-            ArrayList<Ferramenta> ferramentas = ferramentaDAO.getAllFerramentas();
+            ArrayList<Ferramenta> ferramentas = ferramentaDAO.getFerramentasDisponiveis();
             request.setAttribute("amigos", amigos);
             request.setAttribute("ferramentas", ferramentas);
         } catch (SQLException e) {
@@ -55,6 +55,10 @@ public class CadastrarEmprestimo extends HttpServlet {
 
             if (amigo == null || ferramenta == null) {
                 throw new Exception("Amigo ou Ferramenta não encontrado.");
+            }
+
+            if (ferramenta.getStatus() != null && !"Disponível".equalsIgnoreCase(ferramenta.getStatus())) {
+                throw new Exception("A ferramenta selecionada não está disponível para empréstimo.");
             }
 
             Emprestimo emprestimo = new Emprestimo();
