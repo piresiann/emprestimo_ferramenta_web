@@ -1,13 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.getElementById("modalEdicao");
+    
+    const modalEdicao = document.getElementById("modalEdicao");
     const formEdicao = document.getElementById("formEdicao");
     const editNomeInput = document.getElementById("edit-nome");
     const editTelefoneInput = document.getElementById("edit-telefone");
     const editIdInput = document.getElementById("edit-id");
-
     const nomeMsg = document.getElementById("msg-edit-nome");
     const telefoneMsg = document.getElementById("msg-edit-telefone");
 
+
+    const modalExclusao = document.getElementById("modalExclusao");
+    const btnConfirmarExclusao = document.getElementById("btnConfirmarExclusao");
+    const btnCancelarExclusao = document.getElementById("btnCancelarExclusao");
+    const deleteIdInput = document.getElementById("delete-id");
 
     window.abrirModalEdicao = function (id, nome, telefone) {
         editIdInput.value = id;
@@ -15,55 +20,69 @@ document.addEventListener("DOMContentLoaded", function () {
         editTelefoneInput.value = telefone;
         nomeMsg.textContent = "";
         telefoneMsg.textContent = "";
-        modal.style.display = "block";
+        modalEdicao.style.display = "block";
     }
 
-
     window.fecharModalEdicao = function () {
-        modal.style.display = "none";
+        modalEdicao.style.display = "none";
+    }
+
+    window.fecharModalExclusao = function () {
+        modalExclusao.style.display = "none";
+    }
+
+    btnCancelarExclusao.onclick = fecharModalExclusao;
+
+    btnConfirmarExclusao.onclick = function () {
+        const id = deleteIdInput.value;
+
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = formEdicao.getAttribute('action'); // Pega a action do form de edição
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const pageParam = urlParams.get('page') || '1';
+
+        const actionInput = document.createElement('input');
+        actionInput.type = 'hidden';
+        actionInput.name = 'action';
+        actionInput.value = 'excluir';
+        form.appendChild(actionInput);
+
+        const idInput = document.createElement('input');
+        idInput.type = 'hidden';
+        idInput.name = 'id';
+        idInput.value = id;
+        form.appendChild(idInput);
+
+        const pageInput = document.createElement('input');
+        pageInput.type = 'hidden';
+        pageInput.name = 'page';
+        pageInput.value = pageParam;
+        form.appendChild(pageInput);
+
+        document.body.appendChild(form);
+        form.submit();
+
+        fecharModalExclusao();
     }
 
 
     window.confirmarExclusao = function (id) {
-        if (confirm("Tem certeza que deseja excluir este amigo?")) {
 
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = formEdicao.getAttribute('action');
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const pageParam = urlParams.get('page') || '1';
-
-            const actionInput = document.createElement('input');
-            actionInput.type = 'hidden';
-            actionInput.name = 'action';
-            actionInput.value = 'excluir';
-            form.appendChild(actionInput);
-
-            const idInput = document.createElement('input');
-            idInput.type = 'hidden';
-            idInput.name = 'id';
-            idInput.value = id;
-            form.appendChild(idInput);
-
-
-            const pageInput = document.createElement('input');
-            pageInput.type = 'hidden';
-            pageInput.name = 'page';
-            pageInput.value = pageParam;
-            form.appendChild(pageInput);
-
-            document.body.appendChild(form);
-            form.submit();
-        }
+        deleteIdInput.value = id;
+        modalExclusao.style.display = "block";
     }
 
     window.onclick = function(event) {
-        if (event.target === modal) {
+        if (event.target === modalEdicao) {
             fecharModalEdicao();
         }
+        if (event.target === modalExclusao) {
+            fecharModalExclusao();
+        }
     }
-
 
     editTelefoneInput.addEventListener("input", function (e) {
         let value = e.target.value.replace(/\D/g, "");
@@ -89,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
             nomeMsg.textContent = "Mínimo 3 caracteres.";
             valid = false;
         } else {
-
             const nomeRegex = /^[A-Za-zÀ-ÿ\s]+$/;
             if (!nomeRegex.test(nome)) {
                 nomeMsg.textContent = "O nome não deve conter números ou caracteres especiais.";

@@ -122,8 +122,8 @@ public class Emprestimo {
         return true;
     }
 
-    public boolean deleteEmprestimoBD(int id) {
-        dao.deleteEmprestimoById(id);
+    public boolean updateStatus(int id) {
+        dao.updateStatus(id);
         return true;
     }
 

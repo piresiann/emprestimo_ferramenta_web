@@ -42,14 +42,13 @@ public class CadastrarEmprestimo extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         try {
             int amigoId = Integer.parseInt(request.getParameter("amigo_id"));
             int ferramentaId = Integer.parseInt(request.getParameter("ferramenta_id"));
             String dataEmprestimo = request.getParameter("data_emprestimo");
             String dataDevolucao = request.getParameter("data_devolucao");
-            String codigoFerramenta = request.getParameter("codigo_ferramenta");
 
             Amigo amigo = amigoDAO.getAmigoById(amigoId);
             Ferramenta ferramenta = ferramentaDAO.getFerramentaById(ferramentaId);
@@ -64,9 +63,15 @@ public class CadastrarEmprestimo extends HttpServlet {
             emprestimo.setFerramenta(ferramenta.getNome());
             emprestimo.setDataEmprestimo(dataEmprestimo);
             emprestimo.setDataDevolucao(dataDevolucao);
+            emprestimo.setCodigoFerramenta(String.valueOf(ferramentaId));
             emprestimo.setStatus(StatusEmprestimo.ATIVO);
 
             emprestimoDAO.insertEmprestimo(emprestimo);
+
+            Ferramenta ferramentaEmprestada = ferramentaDAO.getFerramentaById(ferramentaId);
+            ferramentaEmprestada.setStatus("Indisponível");
+
+            ferramentaDAO.updateferramentaById(ferramentaEmprestada);
 
             session.setAttribute("mensagemSucesso", "Empréstimo registrado com sucesso!");
         } catch (Exception e) {

@@ -58,7 +58,7 @@ public class GerenciarEmprestimo extends HttpServlet {
         if ("excluir".equals(acao)) {
             try {
                 int idExcluir = Integer.parseInt(request.getParameter("idExcluir"));
-                emprestimo.deleteEmprestimoBD(idExcluir);
+                emprestimo.updateStatus(idExcluir);
 
                 request.getSession().setAttribute("mensagemSucesso", "Empréstimo excluído com sucesso!");
             } catch (Exception e) {

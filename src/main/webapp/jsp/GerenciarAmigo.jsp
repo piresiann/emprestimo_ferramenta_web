@@ -8,6 +8,7 @@
     <title>Gerenciar Amigos</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/LayoutBase.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/GerenciarAmigo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/LayoutRelatorio.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/Icone.png">
 </head>
 <body>
@@ -46,13 +47,13 @@
 
                     <div class="paginacao">
                         <c:if test="${paginaAtual > 1}">
-                            <a href="${pageContext.request.contextPath}/gerenciar/amigo/servlet?page=${paginaAtual - 1}">Anterior</a>
+                            <a href="${pageContext.request.contextPath}/gerenciar/amigo/servlet?page=${paginaAtual - 1}">🡰</a>
                         </c:if>
 
-                        <span>Página ${paginaAtual} de ${totalPaginas}</span>
+                        <span>${paginaAtual} de ${totalPaginas}</span>
 
                         <c:if test="${paginaAtual < totalPaginas}">
-                            <a href="${pageContext.request.contextPath}/gerenciar/amigo/servlet?page=${paginaAtual + 1}">Próxima</a>
+                            <a href="${pageContext.request.contextPath}/gerenciar/amigo/servlet?page=${paginaAtual + 1}">🡲</a>
                         </c:if>
                     </div>
 
@@ -95,6 +96,24 @@
                     <button type="submit" class="salvar">Salvar Edição</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalExclusao" class="modal">
+    <div class="modal-content">
+        <span class="fechar-modal" onclick="fecharModalExclusao()">&times;</span>
+
+        <h3 style="text-align: center; margin-top: 10px;">Confirmar Exclusão</h3>
+        <p style="text-align: center; margin: 20px 0; font-size: 1.1em;">
+            Tem certeza que deseja excluir este amigo?
+        </p>
+
+        <input type="hidden" id="delete-id">
+
+        <div class="confirm-botoes">
+            <button type="button" id="btnConfirmarExclusao" class="btn-sim">Sim</button>
+            <button type="button" id="btnCancelarExclusao" class="btn-nao">Não</button>
         </div>
     </div>
 </div>
