@@ -66,7 +66,7 @@ public class EmprestimoDAO {
                 String dataEmprestimoStr = res.getString("data_emprestimo");
                 String dataDevolucaoStr = res.getString("data_devolucao");
                 StatusEmprestimo status = StatusEmprestimo.statusEnum(res.getString("status"));
-                int codFerramenta = res.getInt("codigo_ferramenta");
+                String codFerramenta = res.getString("codigo_ferramenta");
 
                 SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -107,7 +107,7 @@ public class EmprestimoDAO {
                 stmt.setString(3, emprestimo.getFerramenta());
                 stmt.setString(4, emprestimo.getDataDevolucao());
                 stmt.setString(5, emprestimo.getStatus().getDescricao());
-                stmt.setInt(6, emprestimo.getCodigoFerramenta());
+                stmt.setString(6, emprestimo.getCodigoFerramenta());
 
                 stmt.execute();
             }
@@ -119,22 +119,10 @@ public class EmprestimoDAO {
         }
     }
 
-    public boolean deleteEmprestimoById(int id) {
+    public boolean updateStatus(int id) {
+        String sql = "UPDATE emprestimo SET status = 'Devolvido' WHERE id = " + id;
         try (Statement stmt = conexao.getConexao().createStatement()) {
-            String sql = "UPDATE emprestimo SET status = 'Devolvido' WHERE id = " + id;
             int linhasAfetadas = stmt.executeUpdate(sql);
-
-            String sqlBusca = "SELECT codigo_ferramenta FROM emprestimo WHERE id = " + id;
-            try (ResultSet res = stmt.executeQuery(sqlBusca)) {
-                if (res.next()) {
-                    int idFerramenta = res.getInt("codigo_ferramenta");
-
-                    String sqlFerramenta = "UPDATE ferramenta SET status = 'Disponível' " +
-                            "WHERE id = " + idFerramenta;
-                    stmt.executeUpdate(sqlFerramenta);
-                }
-            }
-
             return linhasAfetadas > 0;
         } catch (SQLException erro) {
             erro.printStackTrace();
@@ -144,7 +132,7 @@ public class EmprestimoDAO {
 
     public boolean updateEmprestimoById(Emprestimo emprestimo) {
 
-        String sql = "UPDATE emprestimo set nome_amigo = ? , ferramenta = ? , data_emprestimo = ? , data_devolucao = ? , codigo_ferramenta = ? WHERE id = ?";
+        String sql = "UPDATE emprestimo set nome_amigo = ? , ferramenta = ? , data_emprestimo = ? , data_devolucao = ?  WHERE id = ?";
 
         try {
             try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
@@ -152,8 +140,7 @@ public class EmprestimoDAO {
                 stmt.setString(2, emprestimo.getFerramenta());
                 stmt.setString(3, emprestimo.getDataEmprestimo());
                 stmt.setString(4, emprestimo.getDataDevolucao());
-                stmt.setInt(5, emprestimo.getCodigoFerramenta());
-                stmt.setInt(6, emprestimo.getId());
+                stmt.setInt(5, emprestimo.getId());
 
                 stmt.execute();
             }
@@ -174,19 +161,16 @@ public class EmprestimoDAO {
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
                 ResultSet res = stmt.executeQuery("SELECT * FROM emprestimo WHERE id = " + id);
-                if (res.next()) {
-                    emprestimo.setNomeAmigo(res.getString("nome_amigo"));
-                    emprestimo.setFerramenta(res.getString("ferramenta"));
-                    emprestimo.setDataEmprestimo(res.getString("data_emprestimo"));
-                    emprestimo.setDataDevolucao(res.getString("data_devolucao"));
-                    emprestimo.setCodigoFerramenta(res.getInt("codigo_ferramenta"));
-                    String statusStr = res.getString("status");
-                    emprestimo.setStatus(StatusEmprestimo.statusEnum(statusStr));
-                }
+                res.next();
+
+                emprestimo.setNomeAmigo(res.getString("nome_amigo"));
+                emprestimo.setFerramenta(res.getString("ferramenta"));
+                emprestimo.setDataEmprestimo(res.getString("data_emprestimo"));
+                emprestimo.setDataDevolucao(res.getString("data_devolucao"));
+                emprestimo.setCodigoFerramenta(res.getString("codigo_ferramenta"));
             }
 
         } catch (SQLException erro) {
-            erro.printStackTrace();
         }
         return emprestimo;
     }
