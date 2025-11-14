@@ -31,7 +31,7 @@ public class CadastrarEmprestimo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             ArrayList<Amigo> amigos = amigoDAO.getAllAmigos();
-            ArrayList<Ferramenta> ferramentas = ferramentaDAO.getAllFerramentas();
+            ArrayList<Ferramenta> ferramentas = ferramentaDAO.getFerramentasDisponiveis(); // apenas disponíveis
             request.setAttribute("amigos", amigos);
             request.setAttribute("ferramentas", ferramentas);
         } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class CadastrarEmprestimo extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         try {
             int amigoId = Integer.parseInt(request.getParameter("amigo_id"));
@@ -57,21 +57,29 @@ public class CadastrarEmprestimo extends HttpServlet {
                 throw new Exception("Amigo ou Ferramenta não encontrado.");
             }
 
+            if (!"Disponível".equalsIgnoreCase(ferramenta.getStatus())) {
+                throw new Exception("A ferramenta selecionada não está disponível.");
+            }
+
             Emprestimo emprestimo = new Emprestimo();
             emprestimo.setId(emprestimoDAO.maiorID() + 1);
             emprestimo.setNomeAmigo(amigo.getNome());
             emprestimo.setFerramenta(ferramenta.getNome());
             emprestimo.setDataEmprestimo(dataEmprestimo);
             emprestimo.setDataDevolucao(dataDevolucao);
-            emprestimo.setCodigoFerramenta(String.valueOf(ferramentaId));
+            emprestimo.setCodigoFerramenta(ferramentaId);
             emprestimo.setStatus(StatusEmprestimo.ATIVO);
 
+            ferramenta.setStatus("Indisponível");
+            ferramenta.updateFerramentasBD(
+                    ferramenta.getId(),
+                    ferramenta.getNome(),
+                    ferramenta.getStatus(),
+                    ferramenta.getMarca(),
+                    ferramenta.getCustoAquisicao()
+            );
+
             emprestimoDAO.insertEmprestimo(emprestimo);
-
-            Ferramenta ferramentaEmprestada = ferramentaDAO.getFerramentaById(ferramentaId);
-            ferramentaEmprestada.setStatus("Indisponível");
-
-            ferramentaDAO.updateferramentaById(ferramentaEmprestada);
 
             session.setAttribute("mensagemSucesso", "Empréstimo registrado com sucesso!");
         } catch (Exception e) {

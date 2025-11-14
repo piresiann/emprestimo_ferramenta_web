@@ -13,7 +13,7 @@ public class Emprestimo {
     private String ferramenta;
     private String dataEmprestimo;
     private String dataDevolucao;
-    private String codigoFerramenta;
+    private int codigoFerramenta;
     private StatusEmprestimo status;
     private final EmprestimoDAO dao;
 
@@ -21,7 +21,7 @@ public class Emprestimo {
         this.dao = new EmprestimoDAO();
     }
 
-    public Emprestimo(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, StatusEmprestimo status, String codigoFerramenta) {
+    public Emprestimo(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, StatusEmprestimo status, int codigoFerramenta) {
         this.id = id;
         this.nomeAmigo = nomeAmigo;
         this.ferramenta = ferramenta;
@@ -72,11 +72,11 @@ public class Emprestimo {
         this.dataDevolucao = dataDevolucao;
     }
 
-    public String getCodigoFerramenta() {
+    public int getCodigoFerramenta() {
         return codigoFerramenta;
     }
 
-    public void setCodigoFerramenta(String codigoFerramenta) {
+    public void setCodigoFerramenta(int codigoFerramenta) {
         this.codigoFerramenta = codigoFerramenta;
     }
 
@@ -113,7 +113,7 @@ public class Emprestimo {
         return dao.getEmprestimoList(true);
     }
 
-    public boolean insertEmprestimo(String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, StatusEmprestimo status, String codigoFerramenta) throws SQLException {
+    public boolean insertEmprestimo(String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, StatusEmprestimo status, int codigoFerramenta) throws SQLException {
         int id = this.maiorID() + 1;
         String hoje = LocalDate.now().toString();
         Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, hoje, dataDevolucao, status,codigoFerramenta);
@@ -127,7 +127,7 @@ public class Emprestimo {
         return true;
     }
 
-    public boolean updateEmprestimoBD(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, StatusEmprestimo status, String codigoFerramenta) {
+    public boolean updateEmprestimoBD(int id, String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, StatusEmprestimo status, int codigoFerramenta) {
         Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, dataEmprestimo, dataDevolucao, status, codigoFerramenta);
         dao.updateEmprestimoById(emprestimo);
         return true;

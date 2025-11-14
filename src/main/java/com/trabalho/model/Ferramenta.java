@@ -80,6 +80,10 @@ public class Ferramenta {
         return dao.getAllFerramentas();
     }
 
+    public ArrayList<Ferramenta> getFerramentasDisponiveis() throws SQLException {
+        return dao.getFerramentasDisponiveis();
+    }
+
     public boolean insertFerramenta(String nome, String status, String marca, BigDecimal custoAquisicao) throws SQLException {
         int id = this.maiorID() + 1;
         Ferramenta ferramenta = new Ferramenta(id, nome, status, marca, custoAquisicao);
