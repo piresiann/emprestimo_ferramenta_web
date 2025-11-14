@@ -10,8 +10,12 @@
     text-align: left;
 }
 
-.tabela-container th {
-    background-color: #f2f2f2;
+th {
+    background-color: #0b3558;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .tabela-container button {
