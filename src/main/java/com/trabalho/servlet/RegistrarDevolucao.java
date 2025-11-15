@@ -23,15 +23,52 @@ public class RegistrarDevolucao extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            // lista apenas empréstimos ativos para devolução
-            com.trabalho.model.Emprestimo model = new com.trabalho.model.Emprestimo();
-            ArrayList<com.trabalho.model.Emprestimo> ativos = model.getEmprestimosAtivos();
-            request.setAttribute("listaEmprestimos", ativos);
+            Emprestimo model = new Emprestimo();
+            ArrayList<Emprestimo> ativos = model.getEmprestimosAtivos();
+
+            int itensPorPagina = 5;
+            int paginaAtual = 1;
+
+            String pageParam = request.getParameter("page");
+            if (pageParam != null) {
+                try {
+                    paginaAtual = Integer.parseInt(pageParam);
+                } catch (NumberFormatException ignored) {
+                    paginaAtual = 1;
+                }
+            }
+
+            int totalRegistros = ativos.size();
+            int totalPaginas = (int) Math.ceil((double) totalRegistros / itensPorPagina);
+            if (totalPaginas == 0) {
+                totalPaginas = 1;
+            }
+            if (paginaAtual < 1) {
+                paginaAtual = 1;
+            } else if (paginaAtual > totalPaginas) {
+                paginaAtual = totalPaginas;
+            }
+
+            int inicio = (paginaAtual - 1) * itensPorPagina;
+            int fim = Math.min(inicio + itensPorPagina, totalRegistros);
+
+            ArrayList<Emprestimo> pagina = new ArrayList<>(ativos.subList(inicio, fim));
+
+            request.setAttribute("listaEmprestimos", pagina);
+            request.setAttribute("paginaAtual", paginaAtual);
+            request.setAttribute("totalPaginas", totalPaginas);
 
             request.getRequestDispatcher("/jsp/RegistrarDevolucao.jsp").forward(request, response);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.getWriter().println("Erro ao carregar empréstimos para devolução: " + e.getMessage());
+        } catch (ServletException e) {
+            e.printStackTrace();
+            throw new IOException(e);
         } catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().println("Erro ao carregar empréstimos para devolução.");
+            response.getWriter().println("Erro inesperado ao carregar empréstimos para devolução.");
         }
     }
 
@@ -41,7 +78,7 @@ public class RegistrarDevolucao extends HttpServlet {
         try {
             int idEmprestimo = Integer.parseInt(idParam);
 
-            Emprestimo emp = emprestimoDAO.getEmprestimoById(idEmprestimo);
+            com.trabalho.model.Emprestimo emp = emprestimoDAO.getEmprestimoById(idEmprestimo);
 
             boolean statusAtualizado = emprestimoDAO.updateStatusAndDevolucao(idEmprestimo);
 
@@ -60,8 +97,7 @@ public class RegistrarDevolucao extends HttpServlet {
                 }
             }
 
-            request.getSession().setAttribute("mensagemSucesso",
-                    "Devolução registrada com sucesso!");
+            request.getSession().setAttribute("mensagemSucesso", "Devolução registrada com sucesso!");
 
         } catch (Exception e) {
             e.printStackTrace();

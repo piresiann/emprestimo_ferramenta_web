@@ -1,12 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Devolução</title>
     <link rel="stylesheet" href="../css/LayoutBase.css">
-    <link rel="stylesheet" href="../css/RegistrarDevolucao.css">
+    <link rel="stylesheet" href="../css/LayoutRelatorio.css">
+    <link rel="stylesheet" href="../css/GerenciarEmprestimo.css">
     <link rel="icon" type="image/png" href="../Icone.png">
 </head>
 <body>
@@ -34,21 +37,36 @@
                 </thead>
                 <tbody>
                 <c:forEach var="emp" items="${listaEmprestimos}">
-                    <tr>
+                    <tr data-id="${emp.id}">
                         <td>${emp.nomeAmigo}</td>
                         <td>${emp.ferramenta}</td>
                         <td>${emp.dataEmprestimo}</td>
                         <td>${emp.dataDevolucao}</td>
                         <td>
-                            <form action="${pageContext.request.contextPath}/registrar/devolucao/servlet" method="post" style="display:inline;">
+                            <form action="${pageContext.request.contextPath}/registrar/devolucao/servlet"
+                                  method="post" style="display:inline;">
                                 <input type="hidden" name="idEmprestimo" value="${emp.id}">
-                                <button type="submit">Registrar Devolução</button>
+                                <button type="submit" class="btn-editar">Devolver</button>
                             </form>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
+
+            <div class="paginacao">
+                <c:if test="${paginaAtual > 1}">
+                    <a href="${pageContext.request.contextPath}/registrar/devolucao?page=${paginaAtual - 1}">🡰</a>
+                </c:if>
+
+                <span style="margin: 0 10px;">${paginaAtual} de ${totalPaginas}</span>
+
+                <c:if test="${paginaAtual < totalPaginas}">
+                    <a href="${pageContext.request.contextPath}/registrar/devolucao?page=${paginaAtual + 1}">🡲</a>
+                </c:if>
+            </div>
+
+            <a href="../home" class="btn-voltar">Voltar</a>
         </c:if>
     </section>
 
@@ -64,6 +82,8 @@
 </div>
 
 <footer class="footer">© 2025</footer>
+
 <script src="../js/Navegar.js"></script>
+
 </body>
 </html>
