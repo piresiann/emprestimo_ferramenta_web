@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empréstimo de Ferramentas</title>
+    <link rel="stylesheet" href="../css/LayoutForms.css">
     <link rel="stylesheet" href="../css/LayoutBase.css">
-    <link rel="stylesheet" href="../css/CadastrarEmprestimo.css">
     <link rel="icon" type="image/png" href="../Icone.png">
 </head>
 <body>

@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Devolução</title>
     <link rel="stylesheet" href="../css/LayoutBase.css">
-    <link rel="stylesheet" href="../css/LayoutRelatorio.css">
-    <link rel="stylesheet" href="../css/GerenciarEmprestimo.css">
+    <link rel="stylesheet" href="../css/LayoutTabela.css">
+    <link rel="stylesheet" href="../css/ModaisEmprestimo.css">
     <link rel="icon" type="image/png" href="../Icone.png">
 </head>
 <body>
