@@ -1,6 +1,7 @@
 package com.trabalho.servlet;
 
 import com.trabalho.model.Emprestimo;
+import com.trabalho.model.StatusFerramenta;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 
 @WebServlet(urlPatterns = {"/gerenciar/emprestimo", "/gerenciar/emprestimo/servlet"})
 public class GerenciarEmprestimo extends HttpServlet {
@@ -58,9 +60,27 @@ public class GerenciarEmprestimo extends HttpServlet {
         if ("excluir".equals(acao)) {
             try {
                 int idExcluir = Integer.parseInt(request.getParameter("idExcluir"));
-                emprestimo.updateStatus(idExcluir);
+                Emprestimo existente = emprestimo.getDao().getEmprestimoById(idExcluir);
 
-                request.getSession().setAttribute("mensagemSucesso", "Empréstimo excluído com sucesso!");
+                if (existente != null && existente.getCodigoFerramenta() != null) {
+                    int idFerramenta = Integer.parseInt(existente.getCodigoFerramenta());
+
+                    com.trabalho.dao.FerramentaDAO ferramentaDAO = new com.trabalho.dao.FerramentaDAO();
+                    com.trabalho.model.Ferramenta ferramenta = ferramentaDAO.getFerramentaById(idFerramenta);
+                    if (ferramenta != null) {
+                        ferramenta.setStatus(StatusFerramenta.DISPONIVEL);
+                        ferramentaDAO.updateferramentaById(ferramenta);
+                    }
+                }
+
+                boolean removido = emprestimo.getDao().deleteEmprestimoById(idExcluir);
+
+                if (removido) {
+                    request.getSession().setAttribute("mensagemSucesso", "Empréstimo excluído com sucesso!");
+                } else {
+                    request.getSession().setAttribute("mensagemErro", "Não foi possível excluir o empréstimo.");
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
                 request.getSession().setAttribute("mensagemErro", "Erro ao excluir empréstimo.");

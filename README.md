@@ -14,11 +14,12 @@ Este repositório contém o projeto desenvolvido para a disciplina de **Desenvol
 ---
 
 ## 🚀 Tecnologias que serão utilizadas
-- Java
-- Java Servlet / JSP
-- MySQL
+- Java v17
+- Tomcat v11
+- Java Servlet / JSP v3
+- MySQL v8.4
 - HTML, CSS e JavaScript
-- Maven
+- Maven v3.9.9
 
 ---
 

@@ -130,6 +130,18 @@ public class EmprestimoDAO {
         }
     }
 
+    public boolean updateStatusAndDevolucao(int id) {
+        String sql = "UPDATE emprestimo SET status = 'Devolvido', data_devolucao = NOW() WHERE id = ?";
+        try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException erro) {
+            erro.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean updateEmprestimoById(Emprestimo emprestimo) {
 
         String sql = "UPDATE emprestimo set nome_amigo = ? , ferramenta = ? , data_emprestimo = ? , data_devolucao = ?  WHERE id = ?";
@@ -161,17 +173,32 @@ public class EmprestimoDAO {
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
                 ResultSet res = stmt.executeQuery("SELECT * FROM emprestimo WHERE id = " + id);
-                res.next();
-
-                emprestimo.setNomeAmigo(res.getString("nome_amigo"));
-                emprestimo.setFerramenta(res.getString("ferramenta"));
-                emprestimo.setDataEmprestimo(res.getString("data_emprestimo"));
-                emprestimo.setDataDevolucao(res.getString("data_devolucao"));
-                emprestimo.setCodigoFerramenta(res.getString("codigo_ferramenta"));
+                if (res.next()) {
+                    emprestimo.setNomeAmigo(res.getString("nome_amigo"));
+                    emprestimo.setFerramenta(res.getString("ferramenta"));
+                    emprestimo.setDataEmprestimo(res.getString("data_emprestimo"));
+                    emprestimo.setDataDevolucao(res.getString("data_devolucao"));
+                    emprestimo.setCodigoFerramenta(res.getString("codigo_ferramenta"));
+                } else {
+                    return null;
+                }
             }
 
         } catch (SQLException erro) {
+            return null;
         }
         return emprestimo;
+    }
+
+    public boolean deleteEmprestimoById(int id) {
+        String sql = "DELETE FROM emprestimo WHERE id = ?";
+        try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

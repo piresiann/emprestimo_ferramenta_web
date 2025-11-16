@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empréstimo de Ferramentas</title>
+    <link rel="stylesheet" href="../css/LayoutForms.css">
     <link rel="stylesheet" href="../css/LayoutBase.css">
-    <link rel="stylesheet" href="../css/CadastrarEmprestimo.css">
     <link rel="icon" type="image/png" href="../Icone.png">
 </head>
 <body>
@@ -38,7 +38,7 @@
             <span id="msg-ferramenta" class="erro"></span>
 
             <label for="data_devolucao">Data de Devolução:</label>
-            <input type="date" id="data_devolucao" name="data_devolucao" required>
+            <input type="date" id="data_devolucao" name="data_devolucao" onkeydown="return false;" required>
             <span id="msg-data" class="erro"></span>
 
             <div class="button-group">

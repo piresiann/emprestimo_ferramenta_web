@@ -31,7 +31,7 @@ public class CadastrarEmprestimo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             ArrayList<Amigo> amigos = amigoDAO.getAllAmigos();
-            ArrayList<Ferramenta> ferramentas = ferramentaDAO.getAllFerramentas(true);
+            ArrayList<Ferramenta> ferramentas = ferramentaDAO.getAllFerramentas();
             request.setAttribute("amigos", amigos);
             request.setAttribute("ferramentas", ferramentas);
         } catch (SQLException e) {
