@@ -38,7 +38,7 @@ public class CadastrarEmprestimo extends HttpServlet {
         } catch (SQLException e) {
             request.getSession().setAttribute("mensagemErro", "Erro ao carregar dados: " + e.getMessage());
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Emprestimo.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/RegistrarEmprestimo.jsp");
         dispatcher.forward(request, response);
     }
 

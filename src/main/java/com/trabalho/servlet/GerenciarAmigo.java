@@ -11,9 +11,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet("/gerenciar/amigo/servlet")
+@WebServlet(urlPatterns = {"/gerenciar/amigo", "/gerenciar/amigo/servlet"})
 public class GerenciarAmigo extends HttpServlet {
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
