@@ -4,6 +4,7 @@ import com.trabalho.dao.EmprestimoDAO;
 import com.trabalho.dao.FerramentaDAO;
 import com.trabalho.model.Emprestimo;
 import com.trabalho.model.Ferramenta;
+import com.trabalho.model.StatusFerramenta;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -92,7 +93,7 @@ public class RegistrarDevolucao extends HttpServlet {
                 int idFerramenta = Integer.parseInt(emp.getCodigoFerramenta());
                 Ferramenta ferramenta = ferramentaDAO.getFerramentaById(idFerramenta);
                 if (ferramenta != null) {
-                    ferramenta.setStatus("Disponível");
+                    ferramenta.setStatus(StatusFerramenta.DISPONIVEL);
                     ferramentaDAO.updateferramentaById(ferramenta);
                 }
             }

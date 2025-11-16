@@ -8,6 +8,7 @@ import com.trabalho.model.Emprestimo;
 import com.trabalho.model.Ferramenta;
 
 import com.trabalho.model.StatusEmprestimo;
+import com.trabalho.model.StatusFerramenta;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -57,7 +58,7 @@ public class CadastrarEmprestimo extends HttpServlet {
                 throw new Exception("Amigo ou Ferramenta não encontrado.");
             }
 
-            if (ferramenta.getStatus() != null && !"Disponível".equalsIgnoreCase(ferramenta.getStatus())) {
+            if (ferramenta.getStatus() != null && !StatusFerramenta.DISPONIVEL.equals(ferramenta.getStatus())) {
                 throw new Exception("A ferramenta selecionada não está disponível para empréstimo.");
             }
 
@@ -73,7 +74,7 @@ public class CadastrarEmprestimo extends HttpServlet {
             emprestimoDAO.insertEmprestimo(emprestimo);
 
             Ferramenta ferramentaEmprestada = ferramentaDAO.getFerramentaById(ferramentaId);
-            ferramentaEmprestada.setStatus("Indisponível");
+            ferramentaEmprestada.setStatus(StatusFerramenta.INDISPONIVEL);
 
             ferramentaDAO.updateferramentaById(ferramentaEmprestada);
 

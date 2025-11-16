@@ -1,6 +1,7 @@
 package com.trabalho.servlet;
 
 import com.trabalho.model.Ferramenta;
+import com.trabalho.model.StatusFerramenta;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ public class CadastrarFerramenta extends HttpServlet {
         String nome = request.getParameter("nome");
         String marca = request.getParameter("marca");
         String aquisicaoStr = request.getParameter("aquisicao");
-        String status = "Disponível";
+        StatusFerramenta status = StatusFerramenta.DISPONIVEL;
 
         BigDecimal valorAquisicao = BigDecimal.ZERO;
 

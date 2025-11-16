@@ -1,6 +1,7 @@
 package com.trabalho.servlet;
 
 import com.trabalho.model.Emprestimo;
+import com.trabalho.model.StatusFerramenta;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -67,7 +68,7 @@ public class GerenciarEmprestimo extends HttpServlet {
                     com.trabalho.dao.FerramentaDAO ferramentaDAO = new com.trabalho.dao.FerramentaDAO();
                     com.trabalho.model.Ferramenta ferramenta = ferramentaDAO.getFerramentaById(idFerramenta);
                     if (ferramenta != null) {
-                        ferramenta.setStatus("Disponível");
+                        ferramenta.setStatus(StatusFerramenta.DISPONIVEL);
                         ferramentaDAO.updateferramentaById(ferramenta);
                     }
                 }
