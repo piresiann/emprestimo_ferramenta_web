@@ -2,6 +2,7 @@ package com.trabalho.dao;
 
 import com.trabalho.config.ConfigDb;
 import com.trabalho.model.Emprestimo;
+import com.trabalho.model.StatusEmprestimo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,49 +38,75 @@ public class EmprestimoDAO {
         return maiorID;
     }
 
-    public ArrayList<Emprestimo> getEmprestimoList() {
+    public ArrayList<Emprestimo> getEmprestimoList(boolean apenasAtivos) {
         emprestimoList.clear();
 
-        try {
-            try (Statement stmt = conexao.getConexao().createStatement()) {
-                ResultSet res = stmt.executeQuery("SELECT id, nome_amigo, REGEXP_REPLACE(ferramenta, '[0-9]', '') AS ferramenta, DATE_FORMAT(data_emprestimo, '%d/%m/%Y') AS data_emprestimo, DATE_FORMAT(data_devolucao, '%d/%m/%Y') AS data_devolucao FROM emprestimo;");
-                while (res.next()) {
-                    int id = res.getInt("id");
-                    String nomeAmigo = res.getString("nome_amigo");
-                    String ferramenta = res.getString("ferramenta");
-                    String dataEmprestimoStr = res.getString("data_emprestimo");
-                    String dataDevolucaoStr = res.getString("data_devolucao");
+        try (Statement stmt = conexao.getConexao().createStatement()) {
 
-                    SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String sql = """
+            SELECT id, nome_amigo, 
+                   REGEXP_REPLACE(ferramenta, '[0-9]', '') AS ferramenta, 
+                   DATE_FORMAT(data_emprestimo, '%d/%m/%Y') AS data_emprestimo, 
+                   DATE_FORMAT(data_devolucao, '%d/%m/%Y') AS data_devolucao,
+                   status,
+                   codigo_ferramenta
+            FROM emprestimo
+        """;
 
-                    Date dataEmprestimo = inputDateFormat.parse(dataEmprestimoStr);
-                    Date dataDevolucao = inputDateFormat.parse(dataDevolucaoStr);
+            if (apenasAtivos) {
+                sql += " WHERE status = 'Ativo'";
+            }
 
-                    String dataEmprestimoFormatadada = outputDateFormat.format(dataEmprestimo);
-                    String dataDevolucaoFormatada = outputDateFormat.format(dataDevolucao);
+            ResultSet res = stmt.executeQuery(sql);
 
-                    Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, dataEmprestimoFormatadada, dataDevolucaoFormatada, null);
-                    emprestimoList.add(emprestimo);
-                }
+            while (res.next()) {
+                int id = res.getInt("id");
+                String nomeAmigo = res.getString("nome_amigo");
+                String ferramenta = res.getString("ferramenta");
+                String dataEmprestimoStr = res.getString("data_emprestimo");
+                String dataDevolucaoStr = res.getString("data_devolucao");
+                StatusEmprestimo status = StatusEmprestimo.statusEnum(res.getString("status"));
+                String codFerramenta = res.getString("codigo_ferramenta");
+
+                SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+                Date dataEmprestimo = inputDateFormat.parse(dataEmprestimoStr);
+                Date dataDevolucao = inputDateFormat.parse(dataDevolucaoStr);
+
+                String dataEmprestimoFormatada = outputDateFormat.format(dataEmprestimo);
+                String dataDevolucaoFormatada = outputDateFormat.format(dataDevolucao);
+
+                Emprestimo emprestimo = new Emprestimo(
+                        id,
+                        nomeAmigo,
+                        ferramenta,
+                        dataEmprestimoFormatada,
+                        dataDevolucaoFormatada,
+                        status,
+                        codFerramenta
+                );
+
+                emprestimoList.add(emprestimo);
             }
 
         } catch (SQLException | ParseException ex) {
+            ex.printStackTrace();
         }
 
         return emprestimoList;
     }
 
     public boolean insertEmprestimo(Emprestimo emprestimo) {
-        String sql = "INSERT INTO emprestimo (id,nome_amigo,ferramenta,data_emprestimo,data_devolucao,codigo_ferramenta) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO emprestimo (id,nome_amigo,ferramenta,data_emprestimo,data_devolucao,status,codigo_ferramenta) VALUES(?,?,?,NOW(),?,?,?)";
 
         try {
             try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
                 stmt.setInt(1, emprestimo.getId());
                 stmt.setString(2, emprestimo.getNomeAmigo());
                 stmt.setString(3, emprestimo.getFerramenta());
-                stmt.setString(4, emprestimo.getDataEmprestimo());
-                stmt.setString(5, emprestimo.getDataDevolucao());
+                stmt.setString(4, emprestimo.getDataDevolucao());
+                stmt.setString(5, emprestimo.getStatus().getDescricao());
                 stmt.setString(6, emprestimo.getCodigoFerramenta());
 
                 stmt.execute();
@@ -92,16 +119,27 @@ public class EmprestimoDAO {
         }
     }
 
-    public boolean deleteEmprestimoById(int id) {
-        try {
-            try (Statement stmt = conexao.getConexao().createStatement()) {
-                stmt.executeUpdate("DELETE FROM emprestimo WHERE id = " + id);
-            }
-
+    public boolean updateStatus(int id) {
+        String sql = "UPDATE emprestimo SET status = 'Devolvido' WHERE id = " + id;
+        try (Statement stmt = conexao.getConexao().createStatement()) {
+            int linhasAfetadas = stmt.executeUpdate(sql);
+            return linhasAfetadas > 0;
         } catch (SQLException erro) {
+            erro.printStackTrace();
+            return false;
         }
+    }
 
-        return true;
+    public boolean updateStatusAndDevolucao(int id) {
+        String sql = "UPDATE emprestimo SET status = 'Devolvido', data_devolucao = NOW() WHERE id = ?";
+        try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException erro) {
+            erro.printStackTrace();
+            return false;
+        }
     }
 
     public boolean updateEmprestimoById(Emprestimo emprestimo) {
@@ -135,17 +173,32 @@ public class EmprestimoDAO {
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
                 ResultSet res = stmt.executeQuery("SELECT * FROM emprestimo WHERE id = " + id);
-                res.next();
-
-                emprestimo.setNomeAmigo(res.getString("nome_amigo"));
-                emprestimo.setFerramenta(res.getString("ferramenta"));
-                emprestimo.setDataEmprestimo(res.getString("data_emprestimo"));
-                emprestimo.setDataDevolucao(res.getString("data_devolucao"));
-                emprestimo.setCodigoFerramenta(res.getString("codigo_ferramenta"));
+                if (res.next()) {
+                    emprestimo.setNomeAmigo(res.getString("nome_amigo"));
+                    emprestimo.setFerramenta(res.getString("ferramenta"));
+                    emprestimo.setDataEmprestimo(res.getString("data_emprestimo"));
+                    emprestimo.setDataDevolucao(res.getString("data_devolucao"));
+                    emprestimo.setCodigoFerramenta(res.getString("codigo_ferramenta"));
+                } else {
+                    return null;
+                }
             }
 
         } catch (SQLException erro) {
+            return null;
         }
         return emprestimo;
+    }
+
+    public boolean deleteEmprestimoById(int id) {
+        String sql = "DELETE FROM emprestimo WHERE id = ?";
+        try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

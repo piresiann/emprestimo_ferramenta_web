@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empréstimo de Ferramentas</title>
     <link rel="stylesheet" href="../css/LayoutBase.css">
-    <link rel="stylesheet" href="../css/LayoutRelatorio.css">
+    <link rel="stylesheet" href="../css/LayoutTabela.css">
     <link rel="icon" type="image/png" href="../Icone.png">
 
 </head>
@@ -32,6 +32,7 @@
                     <th>Ferramenta</th>
                     <th>Data do Empréstimo</th>
                     <th>Data da Devolução</th>
+                    <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,7 @@
                         <td>${emprestimo.ferramenta}</td>
                         <td>${emprestimo.dataEmprestimo}</td>
                         <td>${emprestimo.dataDevolucao}</td>
+                        <td>${emprestimo.status.descricao}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

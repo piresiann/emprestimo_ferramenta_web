@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet("/relatorio/emprestimo/servlet")
+@WebServlet("/relatorio/emprestimo")
 public class RelatorioEmprestimo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

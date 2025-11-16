@@ -2,6 +2,7 @@ package com.trabalho.dao;
 
 import com.trabalho.config.ConfigDb;
 import com.trabalho.model.Ferramenta;
+import com.trabalho.model.StatusFerramenta;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -47,7 +48,7 @@ public class FerramentaDAO {
 
                     int id = res.getInt("id");
                     String nome = res.getString("nome");
-                    String status = res.getString("status");
+                    StatusFerramenta status = StatusFerramenta.statusEnum(res.getString("status"));
                     String marca = res.getString("marca");
                     BigDecimal custoAquisicao = res.getBigDecimal("custo_aquisicao");
 
@@ -64,6 +65,31 @@ public class FerramentaDAO {
         return ferramentasList;
     }
 
+    public ArrayList<Ferramenta> getFerramentasDisponiveis() throws SQLException {
+        ArrayList<Ferramenta> disponiveis = new ArrayList<>();
+
+        String sql = "SELECT * FROM ferramenta WHERE status = 'Disponível'";
+
+        try (Statement stmt = conexao.getConexao().createStatement();
+             ResultSet res = stmt.executeQuery(sql)) {
+
+            while (res.next()) {
+                int id = res.getInt("id");
+                String nome = res.getString("nome");
+                StatusFerramenta status = StatusFerramenta.statusEnum(res.getString("status"));
+                String marca = res.getString("marca");
+                BigDecimal custoAquisicao = res.getBigDecimal("custo_aquisicao");
+
+                Ferramenta ferramenta = new Ferramenta(id, nome, status, marca, custoAquisicao);
+                disponiveis.add(ferramenta);
+            }
+        } catch (SQLException ex) {
+            throw new SQLException(ex.getMessage());
+        }
+
+        return disponiveis;
+    }
+
     public boolean insertFerramenta(Ferramenta ferramenta) {
         String sql = "INSERT INTO ferramenta(id,nome,status,marca,custo_aquisicao) VALUES(?,?,?,?,?)";
 
@@ -71,7 +97,7 @@ public class FerramentaDAO {
             try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
                 stmt.setInt(1, ferramenta.getId());
                 stmt.setString(2, ferramenta.getNome());
-                stmt.setString(3, ferramenta.getStatus());
+                stmt.setString(3, ferramenta.getStatus().getDescricao());
                 stmt.setString(4, ferramenta.getMarca());
                 stmt.setBigDecimal(5, ferramenta.getCustoAquisicao());
 
@@ -105,7 +131,7 @@ public class FerramentaDAO {
         try {
             try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
                 stmt.setString(1, ferramenta.getNome());
-                stmt.setString(2, ferramenta.getStatus());
+                stmt.setString(2, ferramenta.getStatus().getDescricao());
                 stmt.setString(3, ferramenta.getMarca());
                 stmt.setBigDecimal(4, ferramenta.getCustoAquisicao());
                 stmt.setInt(5, ferramenta.getId());
@@ -131,7 +157,7 @@ public class FerramentaDAO {
                 res.next();
 
                 ferramenta.setNome(res.getString("nome"));
-                ferramenta.setStatus(res.getString("status"));
+                ferramenta.setStatus(StatusFerramenta.statusEnum(res.getString("status")));
                 ferramenta.setMarca(res.getString("marca"));
                 ferramenta.setCustoAquisicao(res.getBigDecimal("custo_aquisicao"));
             }

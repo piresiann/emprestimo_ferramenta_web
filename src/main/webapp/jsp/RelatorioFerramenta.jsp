@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empréstimo de Ferramentas</title>
     <link rel="stylesheet" href="../css/LayoutBase.css">
-    <link rel="stylesheet" href="../css/LayoutRelatorio.css">
+    <link rel="stylesheet" href="../css/LayoutTabela.css">
     <link rel="icon" type="image/png" href="../Icone.png">
 
 </head>
@@ -40,7 +40,7 @@
                         <td>${ferramenta.nome}</td>
                         <td>${ferramenta.marca}</td>
                         <td><fmt:formatNumber value="${ferramenta.custoAquisicao}" type="currency" currencySymbol="R$" minFractionDigits="2" maxFractionDigits="2"/></td>
-                        <td>${ferramenta.status}</td>
+                        <td>${ferramenta.status.descricao}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
