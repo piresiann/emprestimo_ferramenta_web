@@ -18,14 +18,13 @@ import java.util.ArrayList;
 @WebServlet(urlPatterns = {"/registrar/devolucao", "/registrar/devolucao/servlet"})
 public class RegistrarDevolucao extends HttpServlet {
 
-    private final EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
-    private final FerramentaDAO ferramentaDAO = new FerramentaDAO();
+    private final Emprestimo emprestimo = new Emprestimo();
+    private final Ferramenta ferramenta = new Ferramenta();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            Emprestimo model = new Emprestimo();
-            ArrayList<Emprestimo> ativos = model.getEmprestimosAtivos();
+            ArrayList<Emprestimo> emprestimosAtivos = emprestimo.getEmprestimosAtivos();
 
             int itensPorPagina = 5;
             int paginaAtual = 1;
@@ -39,7 +38,7 @@ public class RegistrarDevolucao extends HttpServlet {
                 }
             }
 
-            int totalRegistros = ativos.size();
+            int totalRegistros = emprestimosAtivos.size();
             int totalPaginas = (int) Math.ceil((double) totalRegistros / itensPorPagina);
             if (totalPaginas == 0) {
                 totalPaginas = 1;
@@ -53,7 +52,7 @@ public class RegistrarDevolucao extends HttpServlet {
             int inicio = (paginaAtual - 1) * itensPorPagina;
             int fim = Math.min(inicio + itensPorPagina, totalRegistros);
 
-            ArrayList<Emprestimo> pagina = new ArrayList<>(ativos.subList(inicio, fim));
+            ArrayList<Emprestimo> pagina = new ArrayList<>(emprestimosAtivos.subList(inicio, fim));
 
             request.setAttribute("listaEmprestimos", pagina);
             request.setAttribute("paginaAtual", paginaAtual);
@@ -79,22 +78,27 @@ public class RegistrarDevolucao extends HttpServlet {
         try {
             int idEmprestimo = Integer.parseInt(idParam);
 
-            com.trabalho.model.Emprestimo emp = emprestimoDAO.getEmprestimoById(idEmprestimo);
+            Emprestimo emp = emprestimo.getEmprestimoById(idEmprestimo);
 
-            boolean statusAtualizado = emprestimoDAO.updateStatusAndDevolucao(idEmprestimo);
+            boolean statusAtualizado = emprestimo.updateStatus(idEmprestimo);
 
             if (!statusAtualizado) {
                 request.getSession().setAttribute("mensagemErro", "Erro ao atualizar status da devolução.");
                 response.sendRedirect(request.getContextPath() + "/registrar/devolucao");
                 return;
             }
-
+            System.out.println(emp);
+            System.out.println(emp.getCodigoFerramenta());
             if (emp != null && emp.getCodigoFerramenta() != null) {
+                System.out.println("entrou");
                 int idFerramenta = Integer.parseInt(emp.getCodigoFerramenta());
-                Ferramenta ferramenta = ferramentaDAO.getFerramentaById(idFerramenta);
-                if (ferramenta != null) {
-                    ferramenta.setStatus(StatusFerramenta.DISPONIVEL);
-                    ferramentaDAO.updateferramentaById(ferramenta);
+                System.out.println("idFerramenta: " + idFerramenta);
+                Ferramenta ferramentaUpdate = ferramenta.getFerramentaById(idFerramenta);
+                System.out.println(ferramentaUpdate);
+                if (ferramentaUpdate != null) {
+                    ferramentaUpdate.setStatus(StatusFerramenta.DISPONIVEL);
+                    System.out.println(ferramentaUpdate.getStatus());
+                    ferramenta.updateFerramentasBD(ferramentaUpdate);
                 }
             }
 

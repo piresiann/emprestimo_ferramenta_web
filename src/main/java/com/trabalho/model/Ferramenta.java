@@ -93,15 +93,13 @@ public class Ferramenta {
         return true;
     }
 
-    public boolean updateFerramentasBD(int id, String nome, StatusFerramenta status, String marca, BigDecimal custoAquisicao) throws SQLException {
-        Ferramenta ferramenta = new Ferramenta(id, nome, status, marca, custoAquisicao);
+    public boolean updateFerramentasBD(Ferramenta ferramenta) throws SQLException {
         dao.updateferramentaById(ferramenta);
         return true;
     }
 
-    public Ferramenta getFerrametaById(int id) throws SQLException {
-        dao.getFerramentaById(id);
-        return null;
+    public Ferramenta getFerramentaById(int id) throws SQLException {
+        return dao.getFerramentaById(id);
     }
 
     public int maiorID() throws SQLException {
