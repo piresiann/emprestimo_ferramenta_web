@@ -59,13 +59,13 @@
 
             <div class="paginacao">
                 <c:if test="${paginaAtual > 1}">
-                    <a href="${pageContext.request.contextPath}/gerenciar/amigo/servlet?page=${paginaAtual - 1}">🡰</a>
+                    <a href="${pageContext.request.contextPath}/gerenciar/amigo?page=${paginaAtual - 1}">🡰</a>
                 </c:if>
 
                 <span style="margin: 0 10px;">${paginaAtual} de ${totalPaginas}</span>
 
                 <c:if test="${paginaAtual < totalPaginas}">
-                    <a href="${pageContext.request.contextPath}/gerenciar/amigo/servlet?page=${paginaAtual + 1}">🡲</a>
+                    <a href="${pageContext.request.contextPath}/gerenciar/amigo?page=${paginaAtual + 1}">🡲</a>
                 </c:if>
             </div>
 
