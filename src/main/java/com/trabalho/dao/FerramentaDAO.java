@@ -37,13 +37,19 @@ public class FerramentaDAO {
         return maiorID;
     }
 
-    public ArrayList getAllFerramentas() throws SQLException {
+    public ArrayList<Ferramenta> getFerramentaList(Boolean disponiveis) throws SQLException {
 
         ferramentasList.clear();
 
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                ResultSet res = stmt.executeQuery("SELECT * FROM ferramenta");
+                String sql = "SELECT * FROM ferramenta";
+
+                if (disponiveis) {
+                    sql += " WHERE status = 'Disponível'";
+                }
+
+                ResultSet res = stmt.executeQuery(sql);
                 while (res.next()) {
 
                     int id = res.getInt("id");
@@ -63,31 +69,6 @@ public class FerramentaDAO {
         }
 
         return ferramentasList;
-    }
-
-    public ArrayList<Ferramenta> getFerramentasDisponiveis() throws SQLException {
-        ArrayList<Ferramenta> disponiveis = new ArrayList<>();
-
-        String sql = "SELECT * FROM ferramenta WHERE status = 'Disponível'";
-
-        try (Statement stmt = conexao.getConexao().createStatement();
-             ResultSet res = stmt.executeQuery(sql)) {
-
-            while (res.next()) {
-                int id = res.getInt("id");
-                String nome = res.getString("nome");
-                StatusFerramenta status = StatusFerramenta.statusEnum(res.getString("status"));
-                String marca = res.getString("marca");
-                BigDecimal custoAquisicao = res.getBigDecimal("custo_aquisicao");
-
-                Ferramenta ferramenta = new Ferramenta(id, nome, status, marca, custoAquisicao);
-                disponiveis.add(ferramenta);
-            }
-        } catch (SQLException ex) {
-            throw new SQLException(ex.getMessage());
-        }
-
-        return disponiveis;
     }
 
     public boolean insertFerramenta(Ferramenta ferramenta) {
@@ -149,19 +130,19 @@ public class FerramentaDAO {
     public Ferramenta getFerramentaById(int id) throws SQLException {
 
         Ferramenta ferramenta = new Ferramenta();
-        ferramenta.setId(id);
 
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
                 ResultSet res = stmt.executeQuery("SELECT * FROM ferramenta WHERE id = " + id);
                 res.next();
 
+                ferramenta.setId(id);
+                ferramenta.setId(res.getInt("id"));
                 ferramenta.setNome(res.getString("nome"));
                 ferramenta.setStatus(StatusFerramenta.statusEnum(res.getString("status")));
                 ferramenta.setMarca(res.getString("marca"));
                 ferramenta.setCustoAquisicao(res.getBigDecimal("custo_aquisicao"));
             }
-
         } catch (SQLException ex) {
             throw new SQLException(ex.getMessage());
         }

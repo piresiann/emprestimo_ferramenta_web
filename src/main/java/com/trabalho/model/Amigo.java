@@ -78,8 +78,7 @@ public class Amigo {
     }
 
     public Amigo getAmigoById(int id) throws SQLException {
-        dao.getAmigoById(id);
-        return null;
+        return dao.getAmigoById(id);
     }
 
     public int maiorID() throws SQLException {

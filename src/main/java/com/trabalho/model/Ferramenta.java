@@ -42,8 +42,8 @@ public class Ferramenta {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-     public StatusFerramenta getStatus() {
+
+    public StatusFerramenta getStatus() {
         return status;
     }
 
@@ -76,8 +76,11 @@ public class Ferramenta {
                 + "\n Status: " + this.getStatus();
     }
 
-    public ArrayList getAllFerramentas() throws SQLException {
-        return dao.getAllFerramentas();
+    public ArrayList<Ferramenta> getAllFerramentas() throws SQLException {
+        return dao.getFerramentaList(false);
+    }
+    public ArrayList<Ferramenta> getFerramentasDisponiveis() throws SQLException {
+        return dao.getFerramentaList(true);
     }
 
     public boolean insertFerramenta(String nome, StatusFerramenta status, String marca, BigDecimal custoAquisicao) throws SQLException {
@@ -93,15 +96,13 @@ public class Ferramenta {
         return true;
     }
 
-    public boolean updateFerramentasBD(int id, String nome, StatusFerramenta status, String marca, BigDecimal custoAquisicao) throws SQLException {
-        Ferramenta ferramenta = new Ferramenta(id, nome, status, marca, custoAquisicao);
+    public boolean updateFerramentasBD(Ferramenta ferramenta) throws SQLException {
         dao.updateferramentaById(ferramenta);
         return true;
     }
 
-    public Ferramenta getFerrametaById(int id) throws SQLException {
-        dao.getFerramentaById(id);
-        return null;
+    public Ferramenta getFerramentaById(int id) throws SQLException {
+        return dao.getFerramentaById(id);
     }
 
     public int maiorID() throws SQLException {
