@@ -37,13 +37,19 @@ public class FerramentaDAO {
         return maiorID;
     }
 
-    public ArrayList getAllFerramentas() throws SQLException {
+    public ArrayList getAllFerramentas(boolean apenasDiponiveis) throws SQLException {
 
         ferramentasList.clear();
 
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
-                ResultSet res = stmt.executeQuery("SELECT * FROM ferramenta");
+                String sql = "SELECT * FROM ferramenta";
+
+                if (apenasDiponiveis) {
+                    sql += " WHERE status = 'Disponível'";
+                }
+
+                ResultSet res = stmt.executeQuery(sql);
                 while (res.next()) {
 
                     int id = res.getInt("id");
@@ -149,19 +155,18 @@ public class FerramentaDAO {
     public Ferramenta getFerramentaById(int id) throws SQLException {
 
         Ferramenta ferramenta = new Ferramenta();
-        ferramenta.setId(id);
 
         try {
             try (Statement stmt = conexao.getConexao().createStatement()) {
                 ResultSet res = stmt.executeQuery("SELECT * FROM ferramenta WHERE id = " + id);
                 res.next();
 
+                ferramenta.setId(res.getInt("id"));
                 ferramenta.setNome(res.getString("nome"));
                 ferramenta.setStatus(StatusFerramenta.statusEnum(res.getString("status")));
                 ferramenta.setMarca(res.getString("marca"));
                 ferramenta.setCustoAquisicao(res.getBigDecimal("custo_aquisicao"));
             }
-
         } catch (SQLException ex) {
             throw new SQLException(ex.getMessage());
         }

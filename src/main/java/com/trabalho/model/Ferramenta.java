@@ -77,7 +77,11 @@ public class Ferramenta {
     }
 
     public ArrayList getAllFerramentas() throws SQLException {
-        return dao.getAllFerramentas();
+        return dao.getAllFerramentas(false);
+    }
+
+    public ArrayList getFerramentasDisponivel() throws SQLException {
+        return dao.getAllFerramentas(true);
     }
 
     public boolean insertFerramenta(String nome, StatusFerramenta status, String marca, BigDecimal custoAquisicao) throws SQLException {

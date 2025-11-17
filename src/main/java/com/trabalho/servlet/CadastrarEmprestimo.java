@@ -5,7 +5,6 @@ import com.trabalho.model.Emprestimo;
 import com.trabalho.model.Ferramenta;
 
 import com.trabalho.model.StatusEmprestimo;
-import com.trabalho.model.StatusFerramenta;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -51,12 +50,7 @@ public class CadastrarEmprestimo extends HttpServlet {
             Ferramenta ferramentaInsert = ferramenta.getFerramentaById(ferramentaId);
 
 
-            System.out.println("id amigo " + amigoId);
-            System.out.println("id ferramenta " + ferramentaId);
-            System.out.println("obj amigo " + amigoInsert);
-            System.out.println("obj ferramenta " + ferramentaInsert);
-
-            if (amigoInsert == null || ferramentaInsert == null) {
+            if (amigo == null || ferramenta == null) {
                 throw new Exception("Amigo ou Ferramenta não encontrado.");
             }
 
