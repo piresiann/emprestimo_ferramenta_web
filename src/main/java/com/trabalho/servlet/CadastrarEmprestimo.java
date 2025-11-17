@@ -3,7 +3,7 @@ package com.trabalho.servlet;
 import com.trabalho.model.Amigo;
 import com.trabalho.model.Emprestimo;
 import com.trabalho.model.Ferramenta;
-
+import com.trabalho.model.StatusFerramenta;
 import com.trabalho.model.StatusEmprestimo;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

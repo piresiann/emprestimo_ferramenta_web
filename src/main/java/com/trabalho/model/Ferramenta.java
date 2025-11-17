@@ -42,8 +42,8 @@ public class Ferramenta {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-     public StatusFerramenta getStatus() {
+
+    public StatusFerramenta getStatus() {
         return status;
     }
 
@@ -76,12 +76,11 @@ public class Ferramenta {
                 + "\n Status: " + this.getStatus();
     }
 
-    public ArrayList getAllFerramentas() throws SQLException {
-        return dao.getAllFerramentas(false);
+    public ArrayList<Ferramenta> getAllFerramentas() throws SQLException {
+        return dao.getFerramentaList(false);
     }
-
-    public ArrayList getFerramentasDisponivel() throws SQLException {
-        return dao.getAllFerramentas(true);
+    public ArrayList<Ferramenta> getFerramentasDisponiveis() throws SQLException {
+        return dao.getFerramentaList(true);
     }
 
     public boolean insertFerramenta(String nome, StatusFerramenta status, String marca, BigDecimal custoAquisicao) throws SQLException {
