@@ -113,7 +113,7 @@ public class Emprestimo {
         return dao.getEmprestimoList(true);
     }
 
-    public boolean insertEmprestimo(String nomeAmigo, String ferramenta, String dataDevolucao, StatusEmprestimo status, String codigoFerramenta) throws SQLException {
+    public boolean insertEmprestimo(String nomeAmigo, String ferramenta, String dataEmprestimo, String dataDevolucao, StatusEmprestimo status, String codigoFerramenta) throws SQLException {
         int id = this.maiorID() + 1;
         String hoje = LocalDate.now().toString();
         Emprestimo emprestimo = new Emprestimo(id, nomeAmigo, ferramenta, hoje, dataDevolucao, status,codigoFerramenta);
@@ -123,7 +123,7 @@ public class Emprestimo {
     }
 
     public boolean updateStatus(int id) {
-        dao.updateStatusAndDevolucao(id);
+        dao.updateStatus(id);
         return true;
     }
 
@@ -134,7 +134,8 @@ public class Emprestimo {
     }
 
     public Emprestimo getEmprestimoById(int id) {
-        return dao.getEmprestimoById(id);
+        dao.getEmprestimoById(id);
+        return null;
     }
 
     public int maiorID() throws SQLException {

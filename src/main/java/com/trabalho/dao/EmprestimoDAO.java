@@ -119,6 +119,17 @@ public class EmprestimoDAO {
         }
     }
 
+    public boolean updateStatus(int id) {
+        String sql = "UPDATE emprestimo SET status = 'Devolvido' WHERE id = " + id;
+        try (Statement stmt = conexao.getConexao().createStatement()) {
+            int linhasAfetadas = stmt.executeUpdate(sql);
+            return linhasAfetadas > 0;
+        } catch (SQLException erro) {
+            erro.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean updateStatusAndDevolucao(int id) {
         String sql = "UPDATE emprestimo SET status = 'Devolvido', data_devolucao = NOW() WHERE id = ?";
         try (PreparedStatement stmt = conexao.getConexao().prepareStatement(sql)) {
